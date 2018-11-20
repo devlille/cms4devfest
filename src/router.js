@@ -1,25 +1,57 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Partners from './views/partners/Partners'
+import Editions from './views/editions/Editions'
+import EditionsEdit from './views/editions/EditionsEdit'
+import EditionsDashboard from './views/editions/EditionsDashboard'
 
-Vue.use(Router)
+import firebase from 'firebase/app'
 
-export default new Router({
+Vue.use(Router);
+
+const router = new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      redirect: '/editions'
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/editions',
+      name: 'editions',
+      component: Editions
+    },
+    {
+      path: '/editions/edit/:editionId?',
+      name: 'editions-edit',
+      component: EditionsEdit
+    },
+    {
+      path: '/editions/dashboard/:editionId',
+      name: 'editions-dashboard',
+      component: EditionsDashboard
+    },
+    {
+      path: '/partners',
+      name: 'partners',
+      component: Partners
     }
   ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+  firebase.auth()
+    .onAuthStateChanged(user => {
+      if(user) {
+        firebase.auth()
+          .getRedirectResult()
+          .then(() => next())
+          .catch(() => next(false))
+      } else {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithRedirect(provider)
+      }
+    });
+});
+
+export default router
