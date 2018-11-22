@@ -1,5 +1,5 @@
 <template>
-  <div class="editions-edit mw-basic-layout">
+  <div class="editions-dashboard mw-basic-layout">
     <div class="mw-content">
       <app-title :edition="edition"
                  :is-loading="isLoading"
@@ -9,24 +9,45 @@
                class="md-elevation-2">
         <md-tab id="tab-partners"
                 md-icon="business_center"
+                :md-disabled="Object.keys(partners).length === 0"
                 :md-label="$tc('EDITIONS_DASHBOARD.PARTNERS', Object.keys(partners).length, [Object.keys(partners).length])">
 
         </md-tab>
 
         <md-tab id="tab-speakers"
                 md-icon="record_voice_over"
+                :md-disabled="Object.keys(speakers).length === 0"
                 :md-label="$tc('EDITIONS_DASHBOARD.SPEAKERS', Object.keys(speakers).length, [Object.keys(speakers).length])">
 
         </md-tab>
 
         <md-tab id="tab-events"
                 md-icon="event"
+                :md-disabled="Object.keys(events).length === 0"
                 :md-label="$tc('EDITIONS_DASHBOARD.EVENTS', Object.keys(events).length, [Object.keys(events).length])">
 
         </md-tab>
       </md-tabs>
-
     </div>
+
+    <md-speed-dial class="add-btn">
+      <md-speed-dial-target>
+        <md-icon>add</md-icon>
+      </md-speed-dial-target>
+
+      <md-speed-dial-content>
+        <md-button class="md-icon-button">
+          <md-icon>event</md-icon>
+        </md-button>
+        <md-button class="md-icon-button">
+          <md-icon>record_voice_over</md-icon>
+        </md-button>
+        <md-button class="md-icon-button"
+                   @click="add('partners-edit')">
+          <md-icon>business_center</md-icon>
+        </md-button>
+      </md-speed-dial-content>
+    </md-speed-dial>
   </div>
 </template>
 
@@ -36,7 +57,7 @@
   import AppTitle from '@/components/app-title/AppTitle';
 
   export default {
-    name: 'editions-edit',
+    name: 'editions-dashboard',
     components: {AppTitle},
     data() {
       return {
@@ -71,7 +92,20 @@
             this.isLoading = false;
           })
           .catch(err => console.error(err))
+      },
+      add(name) {
+        this.$router.push({ name: name, params: { editionId: this.$route.params.editionId }});
       }
     }
   }
 </script>
+
+<style scoped lang="scss">
+  .editions-dashboard {
+    .add-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+</style>

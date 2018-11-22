@@ -28,21 +28,11 @@
 
             <md-menu-content>
               <md-menu-item :to="{ name: 'editions-edit', params: { editionId: id } }">{{ $t('ACTIONS.MODIFY') }}</md-menu-item>
-              <md-menu-item @click="deleteEdition(id)">{{ $t('ACTIONS.DELETE') }}</md-menu-item>
             </md-menu-content>
           </md-menu>
         </md-list-item>
       </md-list>
     </div>
-
-    <md-dialog-confirm
-            :md-active.sync="active"
-            md-title="Use Google's location service?"
-            md-content="Let Google help apps determine location. <br> This means sending <strong>anonymous</strong> location data to Google, even when no apps are running."
-            md-confirm-text="Agree"
-            md-cancel-text="Disagree"
-            @md-cancel="onCancel"
-            @md-confirm="onConfirm" />
 
     <md-button class="md-fab md-accent add-btn"
                :to="{ name: 'editions-edit' }">
@@ -89,15 +79,6 @@ export default {
           });
         })
     },
-    deleteEdition(editionId) {
-      this.$store.commit('confirmDialog/setConfirmDialog', {
-        active: true,
-        action: {
-          label: this.$t('ACTIONS.RETRY'),
-          handler: () => this.getEditions()
-        }
-      });
-    }
   }
 }
 </script>

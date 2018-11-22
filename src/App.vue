@@ -14,17 +14,14 @@
     <router-view/>
 
     <app-notification/>
-
-    <app-confirm-dialog/>
   </div>
 </template>
 <script>
   import AppUserMenu from '@/components/app-user-menu/AppUserMenu';
   import AppBrand from '@/components/app-brand/AppBrand';
   import AppNotification from '@/components/app-notification/AppNotification';
-  import AppConfirmDialog from '@/components/app-confirm-dialog/AppConfirmDialog';
 
   export default {
-    components: {AppConfirmDialog, AppNotification, AppBrand, AppUserMenu}
+    components: {AppNotification, AppBrand, AppUserMenu}
   }
 </script>

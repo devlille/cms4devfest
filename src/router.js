@@ -32,8 +32,8 @@ const router = new Router({
       component: EditionsDashboard
     },
     {
-      path: '/partners',
-      name: 'partners',
+      path: '/partners/edit/:editionId',
+      name: 'partners-edit',
       component: Partners
     }
   ]

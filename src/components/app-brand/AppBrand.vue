@@ -1,7 +1,13 @@
 <template>
-  <span class="md-title app-brand">
-    <strong>{{ $t('APP.NAME') }}</strong>
-  </span>
+  <div class="app-brand">
+    <router-link :to="{ name: 'editions' }"
+                  class="link">
+        <img src="../../assets/logo-min.png"
+             alt=""/>
+        &nbsp;&nbsp;
+        <strong>{{ $t('APP.NAME') }}</strong>
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -12,12 +18,21 @@ export default {
 
 <style scoped lang="scss">
   .app-brand {
-    strong {
-      text-transform: uppercase;
-    }
+    .link {
+      display: flex;
+      align-items: center;
 
-    span {
-      color: rgba(0, 0, 0, 0.5)
+      strong {
+        text-transform: uppercase;
+        color: black;
+        position: relative;
+        font-size: 1.2rem;
+      }
+
+      img {
+        height: 24px;
+        max-width: 100%;
+      }
     }
   }
 </style>
