@@ -1,29 +1,20 @@
-# cms-devfest
+# CMS 4 DevFest // GDG Lille ([@GDGLille](https://twitter.com/GDGLille)) 
 
-## Project setup
-```
-npm install
-```
+[![CircleCI](https://circleci.com/gh/GDG-Lille/cms-4-devfest/tree/master.svg?style=svg)](https://circleci.com/gh/GDG-Lille/cms-4-devfest/tree/master)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Made with ...
+* [NPM](https://www.npmjs.com/) 
+* [VueJS](https://vuejs.org/) avec [Vue Cli](https://cli.vuejs.org/)
+* [Firebase](https://firebase.google.com)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## How to build for production ?
 
-### Run your tests
-```
-npm run test
-```
+Nothing to do, [Circle CI](https://circleci.com/gh/GDG-Lille) does it :) (@see .circleci/config.yml)
 
-### Lints and fixes files
-```
-npm run lint
-```
+## How to run in local ?
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* Run `npm install -g firebase-tools` to install Firebase SDK
+* Run `firebase serve` to deploy a dev server.
+
+## Contact via [Issues](https://github.com/GDG-Lille/cms-4-devfest/issues)
+Helpful for **question**, **bug** and **contribution request**.
