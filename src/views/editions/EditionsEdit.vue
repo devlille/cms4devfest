@@ -70,16 +70,17 @@
       if(to.params.editionId === undefined) {
         next();
       }
-
-      EditionsService.findOneForCurrentUser(to.params.editionId)
-        .then(edition => next(vm => {
-          vm.edition = edition;
-          vm.isUpdatingMode = true;
-        }))
-        .catch(err => {
-          console.error(err);
-          next({ name: 'editions' });
-        });
+      else {
+        EditionsService.findOneForCurrentUser(to.params.editionId)
+          .then(edition => next(vm => {
+            vm.edition = edition;
+            vm.isUpdatingMode = true;
+          }))
+          .catch(err => {
+            console.error(err);
+            next({ name: 'editions' });
+          });
+      }
     },
     methods: {
       save() {
