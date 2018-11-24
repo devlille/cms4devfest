@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Partners from './views/partners/Partners'
+import PartnersEdit from './views/partners/PartnersEdit'
 import Editions from './views/editions/Editions'
 import EditionsEdit from './views/editions/EditionsEdit'
 import EditionsDashboard from './views/editions/EditionsDashboard'
@@ -32,9 +32,9 @@ const router = new Router({
       component: EditionsDashboard
     },
     {
-      path: '/partners/edit/:editionId',
+      path: '/partners/edit/:editionId/:partnerId?',
       name: 'partners-edit',
-      component: Partners
+      component: PartnersEdit
     }
   ]
 });

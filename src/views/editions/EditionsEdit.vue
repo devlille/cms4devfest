@@ -1,7 +1,8 @@
 <template>
   <div class="editions-edit mw-basic-layout">
     <div class="mw-content">
-      <app-title :title="isUpdatingMode ? $t('EDITIONS_EDIT.LABEL.UPDATE') : $t('EDITIONS_EDIT.LABEL.CREATE')" />
+      <app-title :title="isUpdatingMode ? $t('EDITIONS_EDIT.LABEL.UPDATE') : $t('EDITIONS_EDIT.LABEL.CREATE')"
+                 :back="back"/>
 
       <form novalidate
             @submit.prevent="save">
@@ -25,7 +26,7 @@
             </md-field>
           </md-card-content>
           <md-card-actions>
-            <md-button @click="cancel">{{ $t('ACTIONS.CANCEL') }}</md-button>
+            <md-button :to="back">{{ $t('ACTIONS.CANCEL') }}</md-button>
             <md-button class="md-raised md-primary"
                        type="submit"
                        :disabled="$v.edition.$invalid || isSaving">
@@ -53,6 +54,11 @@
         edition: {}
       }
     },
+    computed: {
+      back() {
+        return { name: 'editions' };
+      }
+    },
     validations: {
       edition: {
         name: {
@@ -61,19 +67,19 @@
       }
     },
     beforeRouteEnter(to, from, next) {
-      if(to.params.editionId !== undefined) {
-        EditionsService.findOneForCurrentUser(to.params.editionId)
-          .then(edition => next(vm => {
-            vm.edition = edition;
-            vm.isUpdatingMode = true;
-          }))
-          .catch(err => {
-            console.error(err);
-            next({ name: 'editions' });
-          });
-      } else {
-        next(vm => vm.edition = {});
+      if(to.params.editionId === undefined) {
+        next();
       }
+
+      EditionsService.findOneForCurrentUser(to.params.editionId)
+        .then(edition => next(vm => {
+          vm.edition = edition;
+          vm.isUpdatingMode = true;
+        }))
+        .catch(err => {
+          console.error(err);
+          next({ name: 'editions' });
+        });
     },
     methods: {
       save() {
@@ -81,9 +87,7 @@
 
         if(this.isUpdatingMode) {
           EditionsService.update(this.$route.params.editionId, this.edition)
-            .then(() => {
-              this.$router.push({ name: 'editions' });
-            })
+            .then(() => this.$router.push(this.back))
             .catch(err => {
               console.error(err);
               this.isSaving = false;
@@ -95,9 +99,7 @@
         }
         else {
           EditionsService.create(this.edition)
-            .then(() => {
-              this.$router.push({ name: 'editions' });
-            })
+            .then(() => this.$router.push(this.back))
             .catch(err => {
               console.error(err);
               this.isSaving = false;
@@ -107,9 +109,6 @@
               });
             })
         }
-      },
-      cancel() {
-        this.$router.back();
       }
     }
   }

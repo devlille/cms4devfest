@@ -8,6 +8,8 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'
 
+import moment from 'moment'
+
 import router from './router'
 import store from './stores'
 
@@ -19,6 +21,7 @@ import VueI18n from 'vue-i18n'
 import fr from './i18n/fr'
 
 import './registerServiceWorker'
+import './filters'
 
 // Theming
 Vue.use(VueMaterial);
@@ -34,6 +37,8 @@ const i18n = new VueI18n({
     fr,
   },
 });
+
+moment.locale('fr');
 
 // Firebase
 const firebaseConfig = {

@@ -24,13 +24,22 @@ export default {
       CREATE: 'Créer une édition',
       UPDATE: 'Modifier une édition'
     },
-    ERROR: 'Echec lors de la récupération de vos éditions.'
+    ERROR: 'Echec lors de la sauvegarde.'
   },
   EDITIONS_DASHBOARD: {
     LABEL: 'Vue d\'ensemble',
-    PARTNERS: '{0} partenaire | {0} partenaire | {0} partenaires',
-    SPEAKERS: '{0} speaker | {0} speaker | {0} speakers',
-    EVENTS: '{0} événement | {0} événement | {0} événements',
+    PARTNERS: {
+      LABEL: '{0} partenaire | {0} partenaire | {0} partenaires',
+      CREATE: 'Créer un partenaire'
+    },
+    SPEAKERS: {
+      LABEL: '{0} speaker | {0} speaker | {0} speakers',
+      CREATE: 'Créer un speaker'
+    },
+    EVENTS: {
+      LABEL: '{0} événement | {0} événement | {0} événements',
+      CREATE: 'Créer un événement'
+    },
     ERROR: 'Echec lors de la récupération de vos éditions.'
   },
   EDITION: {
@@ -42,11 +51,12 @@ export default {
       LABEL: 'URL',
     }
   },
-  PARTNER_EDIT: {
-    NEW: 'Ajouter un nouveau partenaire',
-    UPGRADE: 'Modifier un partenaire',
-    ERROR_WHILE_SAVING: 'Une erreur est survenue, merci de réessayer',
-    IS_SAVING: 'En cours ...',
+  PARTNERS_EDIT: {
+    LABEL: {
+      CREATE: 'Créer un partenaire',
+      UPDATE: 'Modifier un partenaire'
+    },
+    ERROR: 'Echec lors de la sauvegarde.',
     DAYS: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
     SHORT_DAYS: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
     SHORTER_DAYS: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],

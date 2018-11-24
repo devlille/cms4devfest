@@ -2,7 +2,7 @@
   <div class="app-brand">
     <router-link :to="{ name: 'editions' }"
                   class="link">
-        <img src="../../assets/logo-min.png"
+        <img src="../../assets/logo.svg"
              alt=""/>
         &nbsp;&nbsp;
         <strong>{{ $t('APP.NAME') }}</strong>

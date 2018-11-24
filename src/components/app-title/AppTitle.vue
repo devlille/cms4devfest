@@ -1,7 +1,8 @@
 <template>
   <div class="app-title">
     <h2>
-      <app-back v-if="withBackBtn"/>
+      <app-back v-if="back !== null"
+                :to="back"/>
       <span v-if="edition !== null"
             class="edition">
         {{ edition.name }} &nbsp;/&nbsp;
@@ -28,9 +29,9 @@ export default {
       type: Boolean,
       default: false
     },
-    withBackBtn: {
-      type: Boolean,
-      default: true
+    back: {
+      type: Object,
+      default: null
     },
     title: {
       type: String,

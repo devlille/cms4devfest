@@ -2,7 +2,6 @@
   <div class="editions mw-basic-layout">
     <div class="mw-content">
       <app-title :is-loading="isLoading"
-                 :with-back-btn="false"
                  :title="$tc('EDITIONS.LABEL', Object.keys(editions).length)" />
 
       <md-progress-bar v-if="isLoading"

@@ -3,28 +3,70 @@
     <div class="mw-content">
       <app-title :edition="edition"
                  :is-loading="isLoading"
-                 :title="$t('EDITIONS_DASHBOARD.LABEL')" />
+                 :title="$t('EDITIONS_DASHBOARD.LABEL')"
+                 :back="back"/>
 
-      <md-tabs md-alignment="fixed"
+      <md-progress-bar v-if="isLoading"
+                       class="md-accent"
+                       md-mode="indeterminate">
+      </md-progress-bar>
+
+      <md-tabs v-else
+               md-alignment="fixed"
                class="md-elevation-2">
         <md-tab id="tab-partners"
                 md-icon="business_center"
                 :md-disabled="Object.keys(partners).length === 0"
-                :md-label="$tc('EDITIONS_DASHBOARD.PARTNERS', Object.keys(partners).length, [Object.keys(partners).length])">
+                :md-label="$tc('EDITIONS_DASHBOARD.PARTNERS.LABEL', Object.keys(partners).length, [Object.keys(partners).length])">
+
+          <md-list v-if="Object.keys(partners).length > 0"
+                   class="md-triple-line">
+            <md-list-item v-for="(partner, id) in partners"
+                          :key="`partner_${id}`">
+              <md-avatar>
+                <img :src="partner.logoUrl"
+                     alt=""/>
+              </md-avatar>
+
+              <div class="md-list-item-text">
+                <span>{{ partner.name }}</span>
+                <span>
+                  <a :href="`https://${partner.url}`"
+                     target="_blank">
+                    {{ partner.url }}
+                  </a>
+                  &nbsp;-&nbsp;
+                  {{ partner.level }}
+                </span>
+                <span>{{ $t('PARTNER.ACTIVE_ON') }} : {{ partner.activeOn | date('DD/MM/YYYY') }} ({{ partner.activeOn | date('v') }})</span>
+              </div>
+
+              <md-menu>
+                <md-button class="md-icon-button"
+                           md-menu-trigger>
+                  <md-icon>more_vert</md-icon>
+                </md-button>
+
+                <md-menu-content>
+                  <md-menu-item :to="{ name: 'partners-edit', params: { editionId: $route.params.editionId, partnerId: id } }">{{ $t('ACTIONS.MODIFY') }}</md-menu-item>
+                </md-menu-content>
+              </md-menu>
+            </md-list-item>
+          </md-list>
 
         </md-tab>
 
         <md-tab id="tab-speakers"
                 md-icon="record_voice_over"
                 :md-disabled="Object.keys(speakers).length === 0"
-                :md-label="$tc('EDITIONS_DASHBOARD.SPEAKERS', Object.keys(speakers).length, [Object.keys(speakers).length])">
+                :md-label="$tc('EDITIONS_DASHBOARD.SPEAKERS.LABEL', Object.keys(speakers).length, [Object.keys(speakers).length])">
 
         </md-tab>
 
         <md-tab id="tab-events"
                 md-icon="event"
                 :md-disabled="Object.keys(events).length === 0"
-                :md-label="$tc('EDITIONS_DASHBOARD.EVENTS', Object.keys(events).length, [Object.keys(events).length])">
+                :md-label="$tc('EDITIONS_DASHBOARD.EVENTS.LABEL', Object.keys(events).length, [Object.keys(events).length])">
 
         </md-tab>
       </md-tabs>
@@ -36,15 +78,18 @@
       </md-speed-dial-target>
 
       <md-speed-dial-content>
-        <md-button class="md-icon-button">
+        <md-button class="md-icon-button"
+                   :disabled="true">
           <md-icon>event</md-icon>
         </md-button>
-        <md-button class="md-icon-button">
+        <md-button class="md-icon-button"
+                   :disabled="true">
           <md-icon>record_voice_over</md-icon>
         </md-button>
         <md-button class="md-icon-button"
                    @click="add('partners-edit')">
           <md-icon>business_center</md-icon>
+          <md-tooltip md-direction="left">{{ $t('EDITIONS_DASHBOARD.PARTNERS.CREATE') }}</md-tooltip>
         </md-button>
       </md-speed-dial-content>
     </md-speed-dial>
@@ -62,10 +107,15 @@
     data() {
       return {
         isLoading: false,
-        edition: null,
+        edition: {},
         partners: {},
         speakers: {},
         events: {}
+      }
+    },
+    computed: {
+      back() {
+        return { name: 'editions' };
       }
     },
     beforeRouteEnter(to, from, next) {
@@ -88,7 +138,7 @@
             PartnersService.findAllForEdition(this.$route.params.editionId)
           ])
           .then(datas => {
-            console.log(datas)
+            this.partners = datas[0];
             this.isLoading = false;
           })
           .catch(err => console.error(err))

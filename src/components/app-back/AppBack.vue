@@ -8,9 +8,20 @@
 <script>
 export default {
   name: 'AppBack',
+  props: {
+    to: {
+      type: Object,
+      default: null
+    }
+  },
   methods: {
     back() {
-      this.$router.back()
+      if(this.to === null) {
+        this.$router.back();
+      }
+      else {
+        this.$router.push(this.to);
+      }
     }
   }
 }
