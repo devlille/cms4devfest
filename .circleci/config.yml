@@ -8,8 +8,9 @@ jobs:
       - master
     steps:
     - checkout
-    - run: sudo npm install
+    - run: sudo npm install -g node-pre-gyp
     - run: sudo npm install -g firebase-tools
+    - run: sudo npm install
     - run: npm run build
     - run: firebase deploy --token "$FIREBASE_TOKEN"
 
