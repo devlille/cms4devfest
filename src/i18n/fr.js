@@ -1,6 +1,6 @@
 export default {
   APP: {
-    NAME: 'CMS 4 DevFest',
+    NAME: 'CMS4DevFest',
   },
   ACTIONS: {
     CLOSE: 'Fermer',
