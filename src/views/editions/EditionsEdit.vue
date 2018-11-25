@@ -63,6 +63,9 @@
       edition: {
         name: {
           required
+        },
+        url: {
+          required
         }
       }
     },
