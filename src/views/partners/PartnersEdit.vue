@@ -8,10 +8,19 @@
             <form novalidate
                   @submit.prevent="save">
                 <md-card>
+                    <md-card-header>
+                        <div class="md-title">{{ $t('PARTNERS_EDIT.INFOS') }}</div>
+                    </md-card-header>
                     <md-card-content>
                         <md-field>
                             <label>{{ $t('PARTNER.NAME') }}</label>
                             <md-input v-model.trim="partner.name"
+                                      :disabled="isSaving">
+                            </md-input>
+                        </md-field>
+                        <md-field>
+                            <label>{{ $t('PARTNER.SIRET') }}</label>
+                            <md-input v-model.trim="partner.siret"
                                       :disabled="isSaving">
                             </md-input>
                         </md-field>
@@ -24,23 +33,69 @@
                             </md-input>
                         </md-field>
                         <md-field>
-                            <label>{{ $t('PARTNER.LEVEL') }}</label>
-                            <md-select v-model="partner.level"
-                                       :disabled="isSaving">
-                                <md-option v-for="(level, idx) in levels"
-                                           :key="`level_${idx}`"
-                                           :value="level">
-                                    {{ level }}
-                                </md-option>
-                            </md-select>
-                        </md-field>
-                        <md-field>
                             <label>{{ $t('PARTNER.LOGO') }}</label>
                             <md-file v-model.trim="logos.name"
                                      :disabled="isSaving"
                                      accept="image/*"
                                      @md-change="setLogos">
                             </md-file>
+                        </md-field>
+                        <md-field>
+                            <label>{{ $t('PARTNER.ADDRESS.ROAD') }}</label>
+                            <md-input v-model.trim="partner.address.road"
+                                      :disabled="isSaving">
+                            </md-input>
+                        </md-field>
+                        <md-field>
+                            <label>{{ $t('PARTNER.ADDRESS.ZIP_CODE') }}</label>
+                            <md-input v-model.trim="partner.address.zipCode"
+                                      :disabled="isSaving">
+                            </md-input>
+                        </md-field>
+                        <md-field>
+                            <label>{{ $t('PARTNER.ADDRESS.TOWN') }}</label>
+                            <md-input v-model.trim="partner.address.town"
+                                      :disabled="isSaving">
+                            </md-input>
+                        </md-field>
+                    </md-card-content>
+                </md-card>
+
+                <md-card>
+                    <md-card-header>
+                        <div class="md-title">{{ $t('PARTNERS_EDIT.CONTACT') }}</div>
+                    </md-card-header>
+                    <md-card-content>
+                        <md-field>
+                            <label>{{ $t('PARTNER.CONTACT.NAME') }}</label>
+                            <md-input v-model.trim="partner.contact.name"
+                                      :disabled="isSaving">
+                            </md-input>
+                        </md-field>
+                        <md-field>
+                            <label>{{ $t('PARTNER.CONTACT.FUNCTION') }}</label>
+                            <md-input v-model.trim="partner.contact.function"
+                                      :disabled="isSaving">
+                            </md-input>
+                        </md-field>
+                    </md-card-content>
+                </md-card>
+
+                <md-card>
+                    <md-card-header>
+                        <div class="md-title">{{ $t('PARTNERS_EDIT.ADMIN') }}</div>
+                    </md-card-header>
+                    <md-card-content>
+                        <md-field>
+                            <label>{{ $t('PARTNER.LEVEL') }}</label>
+                            <md-select v-model="partner.level"
+                                       :disabled="isSaving">
+                                <md-option v-for="(level, idx) in levels"
+                                           :key="`level_${idx}`"
+                                           :value="level">
+                                    {{ $t(`PACK.${level}`) }}
+                                </md-option>
+                            </md-select>
                         </md-field>
                         <md-datepicker v-model="partner.activeOn"
                                        :disabled="isSaving"
@@ -76,7 +131,10 @@
         isSaving: false,
         isUpdatingMode: false,
         edition: {},
-        partner: {},
+        partner: {
+          address: {},
+          contact: {}
+        },
         logos: {},
         levels: []
       }
@@ -91,8 +149,30 @@
         name: {
           required
         },
+        siret: {
+          required
+        },
         url: {
           required
+        },
+        address: {
+          road: {
+            required
+          },
+          zipCode: {
+            required
+          },
+          town: {
+            required
+          }
+        },
+        contact: {
+          name: {
+            required
+          },
+          function: {
+            required
+          }
         },
         level: {
           required
@@ -130,7 +210,7 @@
         });
     },
     created() {
-      this.levels = ['Gold', 'Silver', 'Bronze'];
+      this.levels = ['GOLD', 'SILVER', 'BRONZE', 'CONTRIBUTEUR'];
 
       this.$material.locale.dateFormat = 'DD/MM/YYYY';
       this.$material.locale.days = this.$t('PARTNERS_EDIT.DAYS');
@@ -172,3 +252,11 @@
     }
   }
 </script>
+
+<style scoped lang="scss">
+    .partners-edit {
+        .md-card + .md-card {
+            margin-top: 20px;
+        }
+    }
+</style>
