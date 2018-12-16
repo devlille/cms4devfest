@@ -1,6 +1,7 @@
 export default {
   APP: {
     NAME: 'CMS4DevFest',
+    COMPANY: 'a GDG Lille project',
   },
   ACTIONS: {
     CLOSE: 'Fermer',
@@ -14,6 +15,23 @@ export default {
   },
   APP_USER_MENU: {
     SIGN_OUT: 'Se déconnecter'
+  },
+  APP_MORE_MENU: {
+    CODE: {
+      LABEL: 'Le projet',
+      HOMEPAGE: 'Fork me on Github',
+      FEAT_REQUEST: 'Proposer une fonctionnalité',
+      BUG_REQUEST: 'Remonter un bug'
+    },
+    SOCIAL: {
+      LABEL: 'Nous suivre',
+      TWITTER: 'Twitter',
+      LINKEDIN: 'LinkedIn',
+    }
+  },
+  APP_DEVFEST: {
+    DDAY: 'J',
+    DEVFEST: 'DevFest'
   },
   EDITIONS: {
     LABEL: 'Aucune édition | Votre édition | Vos éditions',

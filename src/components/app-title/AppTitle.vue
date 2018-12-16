@@ -53,6 +53,7 @@ export default {
 
       .edition {
         color: rgba(0, 0, 0, 0.5);
+        white-space: nowrap;
       }
     }
 
