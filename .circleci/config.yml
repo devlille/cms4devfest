@@ -5,7 +5,7 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: npm install
+      - run: sudo npm install
       - run: npm run lint
 
   deploy_staging:
@@ -13,7 +13,7 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: npm install
+      - run: sudo npm install
       - run: npm run build -- --mode development
       - run: sudo npm install -g firebase-tools
       - run: firebase use staging
@@ -24,7 +24,7 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: npm install
+      - run: sudo npm install
       - run: npm run build
       - run: sudo npm install -g firebase-tools
       - run: firebase use default
