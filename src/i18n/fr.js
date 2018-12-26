@@ -1,6 +1,7 @@
 export default {
   APP: {
     NAME: 'CMS4DevFest',
+    COMPANY: 'a GDG Lille project',
   },
   ACTIONS: {
     CLOSE: 'Fermer',
@@ -14,6 +15,23 @@ export default {
   },
   APP_USER_MENU: {
     SIGN_OUT: 'Se déconnecter'
+  },
+  APP_MORE_MENU: {
+    CODE: {
+      LABEL: 'Le projet',
+      HOMEPAGE: 'Fork me on Github',
+      FEAT_REQUEST: 'Proposer une fonctionnalité',
+      BUG_REQUEST: 'Remonter un bug'
+    },
+    SOCIAL: {
+      LABEL: 'Nous suivre',
+      TWITTER: 'Twitter',
+      LINKEDIN: 'LinkedIn',
+    }
+  },
+  APP_DEVFEST: {
+    DDAY: 'J',
+    DEVFEST: 'DevFest'
   },
   EDITIONS: {
     LABEL: 'Aucune édition | Votre édition | Vos éditions',
@@ -62,13 +80,32 @@ export default {
     SHORTER_DAYS: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
     MONTHS: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
     SHORT_MONTHS: ['Jan.', 'Fév.', 'Mar.', 'Avr.', 'Mai', 'Juin', 'Jui.', 'Août', 'Sep.', 'Oct.', 'Nov.', 'Déc.'],
-    SHORTER_MONTHS: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
+    SHORTER_MONTHS: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+    INFOS: 'Informations',
+    CONTACT: 'Contact',
+    ADMIN: 'Administration'
   },
   PARTNER: {
     NAME: 'Nom',
+    SIRET: 'Numéro SIRET',
+    ADDRESS: {
+      ROAD: 'Rue, voie',
+      ZIP_CODE: 'Code postal',
+      TOWN: 'Ville'
+    },
+    CONTACT: {
+      NAME: 'Prénom & NOM',
+      FUNCTION: 'Rôle'
+    },
     URL: 'Url',
     LOGO: 'Logo',
     ACTIVE_ON: 'Date d\'activation',
     LEVEL: 'Niveau'
+  },
+  PACK: {
+    GOLD: 'Gold',
+    SILVER: 'Silver',
+    BRONZE: 'Bronze',
+    CONTRIBUTEUR: 'Contributeur'
   }
 }

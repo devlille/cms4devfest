@@ -1,5 +1,5 @@
 <template>
-    <md-menu md-align-trigger
+    <md-menu v-if="user !== null"
              class="app-user-menu">
         <md-button md-menu-trigger
                    class="md-icon-button"
@@ -10,10 +10,11 @@
                      :alt="user.displayName"
                      class="photo"/>
             </span>
-            <md-tooltip md-direction="left">{{ user.displayName }}</md-tooltip>
+            <md-tooltip>{{ user.displayName }}</md-tooltip>
         </md-button>
 
         <md-menu-content>
+            <md-subheader>{{ user.displayName }}</md-subheader>
             <md-menu-item @click="signOut">{{ $t('APP_USER_MENU.SIGN_OUT') }}</md-menu-item>
         </md-menu-content>
     </md-menu>
@@ -27,7 +28,7 @@
     data() {
       return {
         isLoading: true,
-        user: {},
+        user: null,
       }
     },
     created() {
@@ -41,8 +42,8 @@
       signOut() {
         firebase.auth()
           .signOut()
-          .then(() => this.$router.push('/'))
-          .catch(() => console.err('oups'))
+          .then(() => this.$router.push({ name: 'sign-in' }))
+          .catch(err => console.error(err))
       },
     }
   }
