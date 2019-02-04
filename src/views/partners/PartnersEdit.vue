@@ -97,11 +97,15 @@
                                 </md-option>
                             </md-select>
                         </md-field>
-                        <md-datepicker v-model="partner.activeOn"
-                                       :disabled="isSaving"
-                                       :md-immediately="true">
-                            <label>{{ $t('PARTNER.ACTIVE_ON') }}</label>
-                        </md-datepicker>
+                        <md-field>
+                            <datetime :value="partner.activeOn.toISOString()"
+                                      @input="partner.activeOn = new Date($event)"
+                                      type="datetime"
+                                      :disabled="isSaving"
+                                      input-class="md-input"
+                                      :auto="true"
+                                      :min-datetime="new Date().toISOString()"></datetime>
+                        </md-field>
                     </md-card-content>
                     <md-card-actions>
                         <md-button :to="back">{{ $t('ACTIONS.CANCEL') }}</md-button>
@@ -132,6 +136,7 @@
         isUpdatingMode: false,
         edition: {},
         partner: {
+          activeOn: new Date(),
           address: {},
           contact: {}
         },
@@ -211,14 +216,6 @@
     },
     created() {
       this.levels = ['GOLD', 'SILVER', 'BRONZE', 'CONTRIBUTEUR'];
-
-      this.$material.locale.dateFormat = 'DD/MM/YYYY';
-      this.$material.locale.days = this.$t('PARTNERS_EDIT.DAYS');
-      this.$material.locale.shortDays = this.$t('PARTNERS_EDIT.SHORT_DAYS');
-      this.$material.locale.shorterDays = this.$t('PARTNERS_EDIT.SHORTER_DAYS');
-      this.$material.locale.months = this.$t('PARTNERS_EDIT.MONTHS');
-      this.$material.locale.shortMonths = this.$t('PARTNERS_EDIT.SHORT_MONTHS');
-      this.$material.locale.shorterMonths = this.$t('PARTNERS_EDIT.SHORTER_MONTHS');
     },
     methods: {
       setLogos(logos) {
