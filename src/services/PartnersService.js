@@ -40,24 +40,26 @@ class PartnersService {
   }
 
   create(partner) {
-    partner.createdBy = firebase.auth().currentUser.uid;
-    partner.createdAt = new Date().getTime();
-    partner.activeOn = partner.activeOn.getTime();
+    const partnerToCreate = Object.assign({}, partner);
+    partnerToCreate.createdBy = firebase.auth().currentUser.uid;
+    partnerToCreate.createdAt = new Date().getTime();
+    partnerToCreate.activeOn = partner.activeOn.getTime();
 
     return firebase.firestore()
       .collection('partners')
-      .add(partner)
+      .add(partnerToCreate)
   }
 
   update(partnerId, partner) {
-    partner.modifiedBy = firebase.auth().currentUser.uid;
-    partner.modifiedAt = new Date().getTime();
-    partner.activeOn = partner.activeOn.getTime();
+    const partnerToUpdate = Object.assign({}, partner);
+    partnerToUpdate.modifiedBy = firebase.auth().currentUser.uid;
+    partnerToUpdate.modifiedAt = new Date().getTime();
+    partnerToUpdate.activeOn = partner.activeOn.getTime();
 
     return firebase.firestore()
       .collection('partners')
       .doc(partnerId)
-      .set(partner)
+      .set(partnerToUpdate)
   }
 
 }

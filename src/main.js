@@ -9,6 +9,8 @@ import 'firebase/firestore'
 import 'firebase/storage'
 
 import moment from 'moment'
+import Datetime from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 
 import router from './router'
 import store from './stores'
@@ -19,6 +21,7 @@ import './theme.scss'
 
 import VueI18n from 'vue-i18n'
 import fr from './i18n/fr'
+import { Settings } from 'luxon'
 
 import './registerServiceWorker'
 import './filters'
@@ -28,6 +31,7 @@ Vue.use(VueMaterial);
 
 // Form
 Vue.use(Vuelidate);
+Vue.use(Datetime)
 
 // i18n
 Vue.use(VueI18n);
@@ -37,6 +41,7 @@ const i18n = new VueI18n({
     fr,
   },
 });
+Settings.defaultLocale = 'fr'
 
 moment.locale('fr');
 
@@ -49,7 +54,6 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-firebase.firestore().settings({ timestampsInSnapshots: true });
 
 Vue.config.productionTip = false;
 
