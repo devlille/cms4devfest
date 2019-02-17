@@ -1,3 +1,4 @@
+@import "~vue-material/dist/vue-material.min.css";
 @import "~vue-material/dist/theme/engine";
 
 @include md-register-theme("default", (
@@ -6,6 +7,14 @@
 ));
 
 @import "~vue-material/dist/theme/all";
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Boogaloo");
+
+body {
+  background-color: #fafafa;
+  overflow-x: hidden;
+}
 
 .mw-basic-layout {
   display: grid;

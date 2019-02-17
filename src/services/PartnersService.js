@@ -1,31 +1,38 @@
-import firebase from 'firebase/app'
+import firebase from 'firebase/app';
 
 class PartnersService {
 
   findAllForEdition(editionId) {
     return firebase.firestore()
-      .collection('partners')
-      .where('edition', '==', editionId)
-      .get()
-      .then(query => {
-        const partners = {};
-        query.forEach(doc => partners[doc.id] = doc.data());
-        return partners
-      })
+    .collection('partners')
+    .where('edition', '==', editionId)
+    .get()
+    .then(query => {
+      const partners = {};
+      query.forEach(doc => {
+        const partnerData = doc.data();
+        partnerData.activeOn = new Date(partnerData.activeOn.seconds * 1000);
+        partners[doc.id] = partnerData;
+      });
+
+      return partners;
+    });
   }
 
   findOne(partnerId) {
     return firebase.firestore()
-      .collection('partners')
-      .doc(partnerId)
-      .get()
-      .then(partner => {
-        if(!partner.exists) {
-          throw new Error(`Partner ${partnerId} doesn't exist !!`)
-        }
+    .collection('partners')
+    .doc(partnerId)
+    .get()
+    .then(partner => {
+      if (!partner.exists) {
+        throw new Error(`Partner ${partnerId} doesn't exist !!`);
+      }
 
-        return partner.data()
-      })
+      const partnerData = partner.data();
+      partnerData.activeOn = new Date(partnerData.activeOn.seconds * 1000);
+      return partnerData;
+    });
   }
 
   uploadLogo(partner, logo) {
@@ -35,33 +42,31 @@ class PartnersService {
     metadata.createdBy = firebase.auth().currentUser.uid;
 
     return firebase.storage().ref()
-      .child(`editions/${partner.edition}/partners/${partner.name}.${extension}`)
-      .put(logo, metadata);
+    .child(`editions/${partner.edition}/partners/${partner.name}.${extension}`)
+    .put(logo, metadata);
   }
 
   create(partner) {
     const partnerToCreate = Object.assign({}, partner);
     partnerToCreate.createdBy = firebase.auth().currentUser.uid;
-    partnerToCreate.createdAt = new Date().getTime();
-    partnerToCreate.activeOn = partner.activeOn.getTime();
+    partnerToCreate.createdAt = new Date();
 
     return firebase.firestore()
-      .collection('partners')
-      .add(partnerToCreate)
+    .collection('partners')
+    .add(partnerToCreate);
   }
 
   update(partnerId, partner) {
     const partnerToUpdate = Object.assign({}, partner);
     partnerToUpdate.modifiedBy = firebase.auth().currentUser.uid;
-    partnerToUpdate.modifiedAt = new Date().getTime();
-    partnerToUpdate.activeOn = partner.activeOn.getTime();
+    partnerToUpdate.modifiedAt = new Date();
 
     return firebase.firestore()
-      .collection('partners')
-      .doc(partnerId)
-      .set(partnerToUpdate)
+    .collection('partners')
+    .doc(partnerId)
+    .set(partnerToUpdate);
   }
 
 }
 
-export default new PartnersService()
+export default new PartnersService();
