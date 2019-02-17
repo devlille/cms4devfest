@@ -1,54 +1,60 @@
-import firebase from 'firebase/app'
+import firebase from 'firebase/app';
 
 class EditionsService {
 
   findAllForCurrentUser() {
     return firebase.firestore()
-      .collection('editions')
-      .where(`members.${firebase.auth().currentUser.uid}`, '==', true)
-      .get()
-      .then(query => {
-        const editions = {};
-        query.forEach(doc => editions[doc.id] = doc.data());
-        return editions
-      })
+    .collection('editions')
+    .where(`members.${firebase.auth().currentUser.uid}`, '==', true)
+    .get()
+    .then(query => {
+      const editions = {};
+      query.forEach(doc => {
+        const editionData = doc.data();
+        editionData.date = new Date(editionData.date.seconds * 1000);
+        editions[doc.id] = editionData;
+      });
+      return editions;
+    });
   }
 
   findOneForCurrentUser(editionId) {
     return firebase.firestore()
-      .collection('editions')
-      .doc(editionId)
-      .get()
-      .then(edition => {
-        if(!edition.exists) {
-          throw new Error(`Edition ${editionId} doesn't exist !!`)
-        }
+    .collection('editions')
+    .doc(editionId)
+    .get()
+    .then(edition => {
+      if (!edition.exists) {
+        throw new Error(`Edition ${editionId} doesn't exist !!`);
+      }
 
-        return edition.data()
-      })
+      const editionData = edition.data();
+      editionData.date = new Date(editionData.date.seconds * 1000);
+      return editionData;
+    });
   }
 
   create(edition) {
     edition.createdBy = firebase.auth().currentUser.uid;
-    edition.createdAt = new Date().getTime();
+    edition.createdAt = new Date();
     edition.members = {};
     edition.members[firebase.auth().currentUser.uid] = true;
 
     return firebase.firestore()
-      .collection('editions')
-      .add(edition)
+    .collection('editions')
+    .add(edition);
   }
 
   update(editionId, edition) {
     edition.modifiedBy = firebase.auth().currentUser.uid;
-    edition.modifiedAt = new Date().getTime();
+    edition.modifiedAt = new Date();
 
     return firebase.firestore()
-      .collection('editions')
-      .doc(editionId)
-      .set(edition)
+    .collection('editions')
+    .doc(editionId)
+    .set(edition);
   }
 
 }
 
-export default new EditionsService()
+export default new EditionsService();
