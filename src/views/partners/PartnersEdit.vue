@@ -187,10 +187,8 @@ export default {
 
       if (datas.length === 2) {
         vm.partner = datas[1];
-        vm.partner.activeOn = new Date(vm.partner.activeOn);
         vm.isUpdatingMode = true;
       } else {
-        vm.partner.activeOn = new Date();
         vm.partner.edition = to.params.editionId;
       }
     }))
