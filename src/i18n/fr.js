@@ -112,4 +112,20 @@ export default {
     BRONZE: 'Bronze',
     CONTRIBUTEUR: 'Contributeur',
   },
+  SPEAKERS_EDIT: {
+    LABEL: {
+      CREATE: 'Créer un speaker',
+      UPDATE: 'Modifier un speaker',
+    },
+    ERROR: 'Echec lors de la sauvegarde.',
+    INFO: '@:EDITIONS_EDIT.INFO',
+  },
+  SPEAKER: {
+    NAME: 'Nom',
+    PROFILE_URL: 'Image de profil',
+    COMPANY: 'Société',
+    BIO: 'Biographie',
+    GITHUB: 'GitHub',
+    TWITTER: 'Twitter',
+  },
 };
