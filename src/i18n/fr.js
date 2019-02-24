@@ -72,6 +72,10 @@ export default {
     },
     CONFERENCE_HALL: {
       LABEL: 'Conference Hall',
+      EVENT: {
+        LABEL: 'ID de l\'évènement',
+        EXAMPLE: 'e.g. uzZ3ekhBTqMW4ejLDmy4',
+      },
       API_KEY: {
         LABEL: 'Api Key',
         EXAMPLE: 'e.g. d773çfyrh-9dzd5-4dzd5-a5bf-b8dzdzdzddf',

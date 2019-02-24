@@ -42,18 +42,31 @@
                                           v-model="edition.date">
                             </app-datetime>
                         </md-field>
+
+                        <md-subheader>{{ $t('EDITION.CONFERENCE_HALL.LABEL') }}</md-subheader>
+                        <md-field>
+                            <label for="conference-hall-event-id">
+                                {{ $t('EDITION.CONFERENCE_HALL.EVENT.LABEL') }}
+                            </label>
+                            <md-input :disabled="isSaving"
+                                      id="conference-hall-event-id"
+                                      name="conference-hall-event-id"
+                                      v-model.trim="edition.conferenceHall.eventId"/>
+                            <span class="md-helper-text"
+                                  v-if="edition.conferenceHall.eventId === ''">
+                                {{ $t('EDITION.CONFERENCE_HALL.EVENT.EXAMPLE') }}
+                            </span>
+                        </md-field>
                         <md-field>
                             <label for="conference-hall-api-key">
-                                {{ $t('EDITION.CONFERENCE_HALL.LABEL') }}
-                                -
                                 {{ $t('EDITION.CONFERENCE_HALL.API_KEY.LABEL') }}
                             </label>
                             <md-input :disabled="isSaving"
                                       id="conference-hall-api-key"
                                       name="conference-hall-api-key"
-                                      v-model.trim="edition.conferenceHallApiKey"/>
+                                      v-model.trim="edition.conferenceHall.apiKey"/>
                             <span class="md-helper-text"
-                                  v-if="edition.conferenceHallApiKey === ''">
+                                  v-if="edition.conferenceHall.apiKey === ''">
                                 {{ $t('EDITION.CONFERENCE_HALL.API_KEY.EXAMPLE') }}
                             </span>
                         </md-field>
@@ -107,8 +120,13 @@ export default {
       date: {
         required,
       },
-      conferenceHallApiKey: {
-        required,
+      conferenceHall: {
+        eventId: {
+          required,
+        },
+        apiKey: {
+          required,
+        },
       },
     },
   },
