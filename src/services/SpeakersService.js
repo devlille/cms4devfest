@@ -14,6 +14,12 @@ class SpeakersService {
     });
   }
 
+  findAllFromConferenceHall(editionId) {
+    return firebase.functions()
+    .httpsCallable('findAllSpeakersFromConferenceHall')({ editionId })
+    .then(res => res.data);
+  }
+
   findOne(speakerId) {
     return firebase.firestore()
     .collection('speakers')

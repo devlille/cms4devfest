@@ -125,8 +125,8 @@ export default {
     INFO: '@:EDITIONS_EDIT.INFO',
   },
   SPEAKER: {
-    NAME: 'Nom',
-    PROFILE_URL: 'Image de profil',
+    NAME: 'Prénom & Nom',
+    PROFILE_URL: 'URL de l\'image de profil',
     COMPANY: 'Société',
     BIO: 'Biographie',
     GITHUB: 'GitHub',

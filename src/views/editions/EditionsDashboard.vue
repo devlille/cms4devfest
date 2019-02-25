@@ -11,6 +11,7 @@
 
             <md-tabs class="md-elevation-2"
                      md-alignment="fixed"
+                     md-dynamic-height
                      v-if="!isLoading">
                 <md-tab :md-disabled="Object.keys(partners).length === 0"
                         :md-label="$tc('EDITIONS_DASHBOARD.PARTNERS.LABEL', Object.keys(partners).length, [Object.keys(partners).length])"
@@ -67,12 +68,12 @@
                         <md-list-item :key="`speaker_${id}`"
                                       v-for="(speaker, id) in speakers">
                             <md-avatar>
-                                <img :src="speaker.profileUrl"
+                                <img :src="speaker.photoURL"
                                      alt=""/>
                             </md-avatar>
 
                             <div class="md-list-item-text">
-                                <span>{{ speaker.name }}</span>
+                                <span>{{ speaker.displayName }}</span>
                                 <span>{{ speaker.company }}</span>
                             </div>
 
