@@ -88,10 +88,10 @@
 <script>
 import AppBack from '@/components/app-back/AppBack.vue';
 import AppDatetime from '@/components/app-datetime/AppDatetime.vue';
+import AppInfo from '@/components/app-info/AppInfo.vue';
 import AppTitle from '@/components/app-title/AppTitle';
 import EditionsService from '@/services/EditionsService';
 import {required} from 'vuelidate/lib/validators';
-import AppInfo from '../../components/app-info/AppInfo.vue';
 
 export default {
   name: 'editions-edit',
@@ -104,7 +104,7 @@ export default {
         name: '',
         url: '',
         date: new Date(),
-        conferenceHallApiKey: '',
+        conferenceHall: {},
       },
       back: { name: 'editions' },
     };
