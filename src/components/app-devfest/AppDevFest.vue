@@ -1,7 +1,7 @@
 <template>
     <div class="app-devfest">
-        <md-button v-if="dday >= 0"
-                   @click="goToDevFestWebSite">
+        <md-button :href="`https://${edition.url}`"
+                   v-if="edition !== null && dday >= 0">
             <strong>{{ $t('APP_DEVFEST.DDAY') }}-{{ dday }}</strong>
             {{ $t('APP_DEVFEST.DEVFEST') }}
         </md-button>
@@ -9,26 +9,33 @@
 </template>
 
 <script>
-  import moment from 'moment';
+import EditionsService from '@/services/EditionsService';
+import moment from 'moment';
 
-  export default {
-    name: 'AppDevFest',
-    props: {
-      date: {
-        type: String,
-        default: null
-      },
+export default {
+  name: 'AppDevFest',
+  data() {
+    return {
+      edition: null,
+    };
+  },
+  computed: {
+    dday() {
+      const today = moment();
+      return moment(this.edition.date).diff(today, 'days') + 1;
     },
-    computed: {
-      dday() {
-        const today = moment();
-        return moment(this.date).diff(today, 'days') + 1;
-      }
+  },
+  created() {
+    this.getEdition();
+  },
+  methods: {
+    getEdition() {
+      EditionsService.findOneForCurrentUser(this.$route.params.editionId)
+      .then(edition => this.edition = edition);
     },
-    methods: {
-      goToDevFestWebSite() {
-        window.open('https://devfest.gdglille.org', '_blank');
-      }
-    }
-  }
+    goToDevFestWebSite() {
+      window.open(this.edition.url, '_blank');
+    },
+  },
+};
 </script>
