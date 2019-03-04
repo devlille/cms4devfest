@@ -33,7 +33,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.toolbar {
-    z-index: unset;
+.app {
+    height: 100%;
+    
+    .toolbar {
+        z-index: unset;
+    }
 }
 </style>

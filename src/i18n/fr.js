@@ -33,6 +33,18 @@ export default {
     DDAY: 'J',
     DEVFEST: 'DevFest',
   },
+  GOOGLE_SIGN_IN: {
+    LABEL: 'Se connecter avec Google',
+    ERROR: 'Echec lors de l\'authentification, merci de réessayer.',
+  },
+  TWITTER_SIGN_IN: {
+    LABEL: 'Se connecter avec Twitter',
+    ERROR: 'Echec lors de l\'authentification, merci de réessayer.',
+  },
+  GITHUB_SIGN_IN: {
+    LABEL: 'Se connecter avec GitHub',
+    ERROR: 'Echec lors de l\'authentification, merci de réessayer.',
+  },
   EDITIONS: {
     LABEL: 'Aucune édition | Votre édition | Vos éditions',
     ERROR: 'Echec lors de la récupération de vos éditions.',
