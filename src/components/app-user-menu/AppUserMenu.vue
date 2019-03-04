@@ -1,13 +1,13 @@
 <template>
-    <md-menu v-if="user !== null"
-             class="app-user-menu">
-        <md-button md-menu-trigger
+    <md-menu class="app-user-menu"
+             v-if="user !== null">
+        <md-button :disabled="isLoading"
                    class="md-icon-button"
-                   :disabled="isLoading">
+                   md-menu-trigger>
             <md-icon v-if="isLoading">account_circle</md-icon>
             <span v-else>
-                <img :src="user.photoURL"
-                     :alt="user.displayName"
+                <img :alt="user.displayName"
+                     :src="user.photoURL"
                      class="photo"/>
             </span>
             <md-tooltip>{{ user.displayName }}</md-tooltip>
@@ -21,40 +21,37 @@
 </template>
 
 <script>
-  import firebase from 'firebase/app'
+import firebase from 'firebase/app';
 
-  export default {
-    name: 'AppUserMenu',
-    data() {
-      return {
-        isLoading: true,
-        user: null,
-      }
+export default {
+  name: 'AppUserMenu',
+  data() {
+    return {
+      isLoading: true,
+      user: null,
+    };
+  },
+  created() {
+    firebase.auth()
+    .onAuthStateChanged(user => {
+      this.user = user;
+      this.isLoading = false;
+    });
+  },
+  methods: {
+    signOut() {
+      this.$router.push({ name: 'sign-out' });
     },
-    created() {
-      firebase.auth()
-        .onAuthStateChanged(user => {
-          this.user = user
-          this.isLoading = false
-        })
-    },
-    methods: {
-      signOut() {
-        firebase.auth()
-          .signOut()
-          .then(() => this.$router.push({ name: 'sign-in' }))
-          .catch(err => console.error(err))
-      },
-    }
-  }
+  },
+};
 </script>
 
 <style scoped lang="scss">
-    .app-user-menu {
-        .photo {
-            height: 24px;
-            max-width: 100%;
-            border-radius: 50%;
-        }
+.app-user-menu {
+    .photo {
+        height: 24px;
+        max-width: 100%;
+        border-radius: 50%;
     }
+}
 </style>
