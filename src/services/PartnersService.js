@@ -35,17 +35,6 @@ class PartnersService {
     });
   }
 
-  uploadLogo(partner, logo) {
-    const extension = logo.name.split('.').pop();
-
-    const metadata = {};
-    metadata.createdBy = firebase.auth().currentUser.uid;
-
-    return firebase.storage().ref()
-    .child(`editions/${partner.edition}/partners/${partner.name}.${extension}`)
-    .put(logo, metadata);
-  }
-
   create(partner) {
     const partnerToCreate = Object.assign({}, partner);
     partnerToCreate.createdBy = firebase.auth().currentUser.uid;

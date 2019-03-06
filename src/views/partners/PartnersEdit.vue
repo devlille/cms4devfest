@@ -8,102 +8,135 @@
                 </template>
             </app-title>
 
-            <form @submit.prevent="save"
-                  novalidate>
-                <app-info v-if="$v.partner.$invalid">{{ $t('PARTNERS_EDIT.INFO') }}</app-info>
-                <md-card>
-                    <md-card-content>
-                        <md-field>
-                            <label>{{ $t('PARTNER.NAME') }}</label>
-                            <md-input :disabled="isSaving"
-                                      v-model.trim="partner.name">
-                            </md-input>
-                        </md-field>
-                        <md-field>
-                            <label>{{ $t('PARTNER.URL') }}</label>
-                            <span class="md-prefix">https://</span>
-                            <md-input :disabled="isSaving"
-                                      type="url"
-                                      v-model.trim="partner.url">
-                            </md-input>
-                        </md-field>
-                        <md-field>
-                            <label>{{ $t('PARTNER.LOGO') }}</label>
-                            <md-file :disabled="isSaving"
-                                     @md-change="setLogos"
-                                     accept="image/*"
-                                     v-model.trim="logos.name">
-                            </md-file>
-                        </md-field>
+            <md-steppers :md-active-step.sync="activeStep"
+                         class="md-elevation-2"
+                         md-linear
+                         md-vertical>
+                <md-step :md-done="doneSteps.infos"
+                         :md-label="$t('PARTNERS_EDIT.INFOS')"
+                         id="infos">
+                    <md-field :class="$v.partner.name.$invalid ? 'md-invalid' : ''">
+                        <label>{{ $t('PARTNER.NAME') }}</label>
+                        <md-input autofocus
+                                  name="partnerName"
+                                  v-model.trim="partner.name">
+                        </md-input>
+                        <span class="md-error"
+                              v-if="!$v.partner.name.required">
+                            {{ $t('PARTNERS_EDIT.ERRORS.REQUIRED') }}
+                        </span>
+                    </md-field>
+                    <md-field :class="$v.partner.url.$invalid ? 'md-invalid' : ''">
+                        <label>{{ $t('PARTNER.URL') }}</label>
+                        <span class="md-prefix">https://</span>
+                        <md-input name="partnerUrl"
+                                  type="url"
+                                  v-model.trim="partner.url">
+                        </md-input>
+                        <span class="md-error"
+                              v-if="!$v.partner.url.required">
+                            {{ $t('PARTNERS_EDIT.ERRORS.REQUIRED') }}
+                        </span>
+                    </md-field>
+                    <app-file-uploader
+                            :disabled="$v.partner.name.$invalid"
+                            :path-on-cloud-storage="`editions/${partner.edition}/partners/${partner.name}`"
+                            v-model="partner.logoUrl">
+                    </app-file-uploader>
+                    <md-button
+                            :disabled="$v.partner.name.$invalid || $v.partner.url.$invalid || $v.partner.logoUrl.$invalid"
+                            @click="markStepAsDoneAndGo('infos', 'administrative')"
+                            class="md-primary md-raised">
+                        {{ $t('ACTIONS.CONTINUE') }}
+                    </md-button>
+                </md-step>
 
-                        <md-subheader>{{ $t('PARTNERS_EDIT.ADMINISTRATIVE') }}</md-subheader>
-                        <md-field>
-                            <label>{{ $t('PARTNER.SIRET') }}</label>
-                            <md-input :disabled="isSaving"
-                                      v-model.trim="partner.siret">
-                            </md-input>
-                        </md-field>
-                        <md-field>
-                            <label>{{ $t('PARTNER.ADDRESS.ROAD') }}</label>
-                            <md-input :disabled="isSaving"
-                                      v-model.trim="partner.address.road">
-                            </md-input>
-                        </md-field>
-                        <md-field>
-                            <label>{{ $t('PARTNER.ADDRESS.ZIP_CODE') }}</label>
-                            <md-input :disabled="isSaving"
-                                      v-model.trim="partner.address.zipCode">
-                            </md-input>
-                        </md-field>
-                        <md-field>
-                            <label>{{ $t('PARTNER.ADDRESS.TOWN') }}</label>
-                            <md-input :disabled="isSaving"
-                                      v-model.trim="partner.address.town">
-                            </md-input>
-                        </md-field>
+                <md-step :md-done="doneSteps.administrative"
+                         :md-label="$t('PARTNERS_EDIT.ADMINISTRATIVE')"
+                         id="administrative">
+                    <md-field>
+                        <label>{{ $t('PARTNER.SIRET') }}</label>
+                        <md-input name="partnerSiret"
+                                  v-model.trim="partner.siret">
+                        </md-input>
+                    </md-field>
+                    <md-field>
+                        <label>{{ $t('PARTNER.ADDRESS.ROAD') }}</label>
+                        <md-input name="partnerAddressRoad"
+                                  v-model.trim="partner.address.road">
+                        </md-input>
+                    </md-field>
+                    <md-field>
+                        <label>{{ $t('PARTNER.ADDRESS.ZIP_CODE') }}</label>
+                        <md-input name="partnerAddressZipCode"
+                                  v-model.trim="partner.address.zipCode">
+                        </md-input>
+                    </md-field>
+                    <md-field>
+                        <label>{{ $t('PARTNER.ADDRESS.TOWN') }}</label>
+                        <md-input name="partnerAddressTown"
+                                  v-model.trim="partner.address.town">
+                        </md-input>
+                    </md-field>
+                    <md-button
+                            @click="markStepAsDoneAndGo('administrative', 'contact')"
+                            class="md-primary md-raised">
+                        {{ $t('ACTIONS.CONTINUE') }}
+                    </md-button>
+                </md-step>
 
-                        <md-subheader>{{ $t('PARTNERS_EDIT.CONTACT') }}</md-subheader>
-                        <md-field>
-                            <label>{{ $t('PARTNER.CONTACT.NAME') }}</label>
-                            <md-input :disabled="isSaving"
-                                      v-model.trim="partner.contact.name">
-                            </md-input>
-                        </md-field>
-                        <md-field>
-                            <label>{{ $t('PARTNER.CONTACT.FUNCTION') }}</label>
-                            <md-input :disabled="isSaving"
-                                      v-model.trim="partner.contact.function">
-                            </md-input>
-                        </md-field>
-
-                        <md-subheader>{{ $t('PARTNERS_EDIT.OPTIONS') }}</md-subheader>
-                        <md-field>
-                            <label>{{ $t('PARTNER.LEVEL') }}</label>
-                            <md-select :disabled="isSaving"
-                                       v-model="partner.level">
-                                <md-option :key="`level_${idx}`"
-                                           :value="level"
-                                           v-for="(level, idx) in levels">
-                                    {{ $t(`PACK.${level}`) }}
-                                </md-option>
-                            </md-select>
-                        </md-field>
-                        <md-field>
-                            <app-datetime :disabled="isSaving"
-                                          v-model="partner.activeOn">
-                            </app-datetime>
-                        </md-field>
-                    </md-card-content>
-                    <md-card-actions>
-                        <md-button :to="back">{{ $t('ACTIONS.CANCEL') }}</md-button>
-                        <md-button :disabled="$v.partner.$invalid || isSaving"
-                                   class="md-raised md-primary"
-                                   type="submit">
-                            {{ $t('ACTIONS.VALID') }}
-                        </md-button>
-                    </md-card-actions>
-                </md-card>
-            </form>
+                <md-step :md-done="doneSteps.contact"
+                         :md-label="$t('PARTNERS_EDIT.CONTACT')"
+                         id="contact">
+                    <md-field>
+                        <label>{{ $t('PARTNER.CONTACT.NAME') }}</label>
+                        <md-input name="partnerContactName"
+                                  v-model.trim="partner.contact.name">
+                        </md-input>
+                    </md-field>
+                    <md-field>
+                        <label>{{ $t('PARTNER.CONTACT.FUNCTION') }}</label>
+                        <md-input name="partnerContactFunction"
+                                  v-model.trim="partner.contact.function">
+                        </md-input>
+                    </md-field>
+                    <md-button
+                            @click="markStepAsDoneAndGo('contact', 'options')"
+                            class="md-primary md-raised">
+                        {{ $t('ACTIONS.CONTINUE') }}
+                    </md-button>
+                </md-step>
+                <md-step :md-label="$t('PARTNERS_EDIT.OPTIONS')"
+                         id="options">
+                    <md-field :class="$v.partner.level.$invalid ? 'md-invalid' : ''">
+                        <label>{{ $t('PARTNER.LEVEL') }}</label>
+                        <md-select name="partnerLevel"
+                                   v-model="partner.level">
+                            <md-option :key="`level_${idx}`"
+                                       :value="level"
+                                       v-for="(level, idx) in levels">
+                                {{ $t(`PACK.${level}`) }}
+                            </md-option>
+                        </md-select>
+                        <span class="md-error"
+                              v-if="!$v.partner.level.required">
+                            {{ $t('PARTNERS_EDIT.ERRORS.REQUIRED') }}
+                        </span>
+                    </md-field>
+                    <md-field :class="$v.partner.activeOn.$invalid ? 'md-invalid' : ''">
+                        <app-datetime v-model="partner.activeOn"></app-datetime>
+                        <span class="md-error"
+                              v-if="!$v.partner.activeOn.required">
+                            {{ $t('PARTNERS_EDIT.ERRORS.REQUIRED') }}
+                        </span>
+                    </md-field>
+                    <md-button :disabled="$v.partner.$invalid || isSaving"
+                               @click="save"
+                               class="md-raised md-primary">
+                        {{ $t('ACTIONS.VALID') }}
+                    </md-button>
+                </md-step>
+            </md-steppers>
         </div>
     </div>
 </template>
@@ -111,7 +144,7 @@
 <script>
 import AppBack from '@/components/app-back/AppBack.vue';
 import AppDatetime from '@/components/app-datetime/AppDatetime.vue';
-import AppInfo from '@/components/app-info/AppInfo.vue';
+import AppFileUploader from '@/components/app-file-uploader/AppFileUploader.vue';
 import AppTitle from '@/components/app-title/AppTitle';
 import EditionsService from '@/services/EditionsService';
 import PartnersService from '@/services/PartnersService';
@@ -119,58 +152,33 @@ import {required} from 'vuelidate/lib/validators';
 
 export default {
   name: 'PartnersEdit',
-  components: { AppDatetime, AppInfo, AppBack, AppTitle },
+  components: { AppFileUploader, AppDatetime, AppBack, AppTitle },
   data() {
     return {
       isSaving: false,
       isUpdatingMode: false,
+      activeStep: 'infos',
+      doneSteps: {
+        first: false,
+        second: false,
+      },
       edition: {},
       partner: {
         activeOn: new Date(),
         address: {},
         contact: {},
       },
-      logos: {},
       levels: ['GOLD', 'SILVER', 'BRONZE', 'CONTRIBUTEUR'],
       back: { name: 'editions-dashboard', params: { editionId: this.$route.params.editionId } },
     };
   },
   validations: {
     partner: {
-      name: {
-        required,
-      },
-      siret: {
-        required,
-      },
-      url: {
-        required,
-      },
-      address: {
-        road: {
-          required,
-        },
-        zipCode: {
-          required,
-        },
-        town: {
-          required,
-        },
-      },
-      contact: {
-        name: {
-          required,
-        },
-        function: {
-          required,
-        },
-      },
-      level: {
-        required,
-      },
-      activeOn: {
-        required,
-      },
+      name: { required },
+      url: { required },
+      level: { required },
+      activeOn: { required },
+      logoUrl: { required },
     },
   },
   beforeRouteEnter(to, from, next) {
@@ -195,28 +203,26 @@ export default {
     .catch(() => next({ name: 'editions' }));
   },
   methods: {
-    setLogos(logos) {
-      this.logos = logos;
+    markStepAsDoneAndGo(stepDone, stepToGo) {
+      this.doneSteps[stepDone] = true;
+      this.activeStep = stepToGo;
     },
     save() {
       this.isSaving = true;
+      let promise;
 
-      PartnersService.uploadLogo(this.partner, this.logos[0])
-      .then(logo => logo.ref.getDownloadURL())
-      .then(logoUrl => {
-        this.partner.logoUrl = logoUrl;
+      if (this.isUpdatingMode) {
+        promise = PartnersService.update(this.$route.params.partnerId, this.partner);
+      } else {
+        promise = PartnersService.create(this.partner);
+      }
 
-        if (this.isUpdatingMode) {
-          return PartnersService.update(this.$route.params.partnerId, this.partner);
-        } else {
-          return PartnersService.create(this.partner);
-        }
-      })
+      promise
       .then(() => this.$router.push(this.back))
       .catch(() => {
         this.$store.commit('notification/setNotification', {
           active: true,
-          message: this.$t('PARTNERS_EDIT.ERROR'),
+          message: this.$t('PARTNERS_EDIT.ERRORS.SAVING'),
         });
       })
       .finally(() => this.isSaving = false);
