@@ -7,6 +7,7 @@ export default {
     CLOSE: 'Fermer',
     CANCEL: 'Annuler',
     VALID: 'Valider',
+    CONTINUE: 'Continuer',
     RETRY: 'Réessayer',
     MODIFY: 'Modifier',
     DELETE: 'Supprimer',
@@ -32,6 +33,9 @@ export default {
   APP_DEVFEST: {
     DDAY: 'J',
     DEVFEST: 'DevFest',
+  },
+  APP_FILE_UPLOADER: {
+    LABEL: 'Cliquer pour uploader une image',
   },
   EDITIONS: {
     LABEL: 'Aucune édition | Votre édition | Vos éditions',
@@ -87,9 +91,12 @@ export default {
       CREATE: 'Créer un partenaire',
       UPDATE: 'Modifier un partenaire',
     },
-    ERROR: 'Echec lors de la sauvegarde.',
-    INFO: '@:EDITIONS_EDIT.INFO',
-    ADMINISTRATIVE: 'Administratif',
+    ERRORS: {
+      REQUIRED: 'Obligatoire',
+      SAVING: 'Echec lors de la sauvegarde.',
+    },
+    INFOS: 'Informations générales',
+    ADMINISTRATIVE: 'Informations administratives',
     CONTACT: 'Contact',
     OPTIONS: 'Options',
   },
@@ -121,11 +128,18 @@ export default {
       CREATE: 'Créer un speaker',
       UPDATE: 'Modifier un speaker',
     },
-    ERROR: 'Echec lors de la sauvegarde.',
+    CONFERENCE_HALL: {
+      LOADING: 'Chargement des données depuis ConferenceHall, merci de patienter ...',
+    },
+    ERRORS: {
+      REQUIRED: 'Obligatoire',
+      SAVING: 'Echec lors de la sauvegarde.',
+    },
     INFO: '@:EDITIONS_EDIT.INFO',
   },
   SPEAKER: {
     NAME: 'Prénom & Nom',
+    ROLE: 'Rôle',
     PROFILE_URL: 'URL de l\'image de profil',
     COMPANY: 'Société',
     BIO: 'Biographie',

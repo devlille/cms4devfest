@@ -12,11 +12,17 @@
                   novalidate>
                 <md-card>
                     <md-card-content>
-                        <md-autocomplete :md-open-on-focus="false"
-                                         :md-options="availableSpeakers"
-                                         @md-selected="initSpeakerFromConferenceHall"
-                                         v-model.trim="speaker.displayName">
-                            <label>{{ $t('SPEAKER.NAME') }}</label>
+                        <md-autocomplete
+                                :class="$v.speaker.displayName.$invalid ? 'md-invalid' : ''"
+                                :disabled="isLoadingConferenceHall"
+                                :md-open-on-focus="false"
+                                :md-options="availableSpeakers"
+                                @md-selected="initSpeakerFromConferenceHall"
+                                v-model.trim="speaker.displayName">
+                            <label>
+                                <span v-if="isLoadingConferenceHall">{{ $t('SPEAKERS_EDIT.CONFERENCE_HALL.LOADING') }}</span>
+                                <span v-else>{{ $t('SPEAKER.NAME') }}</span>
+                            </label>
 
                             <template slot="md-autocomplete-item"
                                       slot-scope="{ item, term }">
@@ -24,7 +30,18 @@
                                     {{ item }}
                                 </md-highlight-text>
                             </template>
+
+                            <span class="md-error"
+                                  v-if="!$v.speaker.displayName.required">
+                                {{ $t('SPEAKERS_EDIT.ERRORS.REQUIRED') }}
+                            </span>
                         </md-autocomplete>
+                        <md-field>
+                            <label>{{ $t('SPEAKER.ROLE') }}</label>
+                            <md-input :disabled="isSaving"
+                                      v-model.trim="speaker.role">
+                            </md-input>
+                        </md-field>
                         <div class="field-img">
                             <div class="img">
                                 <img :src="speaker.photoURL"
@@ -33,25 +50,37 @@
                                 <md-icon v-else>account_circle</md-icon>
                             </div>
                             <div class="field">
-                                <md-field>
+                                <md-field :class="$v.speaker.photoURL.$invalid ? 'md-invalid' : ''">
                                     <label>{{ $t('SPEAKER.PROFILE_URL') }}</label>
                                     <md-input :disabled="isSaving"
                                               v-model.trim="speaker.photoURL">
                                     </md-input>
+                                    <span class="md-error"
+                                          v-if="!$v.speaker.photoURL.required">
+                                        {{ $t('SPEAKERS_EDIT.ERRORS.REQUIRED') }}
+                                    </span>
                                 </md-field>
                             </div>
                         </div>
-                        <md-field>
+                        <md-field :class="$v.speaker.company.$invalid ? 'md-invalid' : ''">
                             <label>{{ $t('SPEAKER.COMPANY') }}</label>
                             <md-input :disabled="isSaving"
                                       v-model.trim="speaker.company">
                             </md-input>
+                            <span class="md-error"
+                                  v-if="!$v.speaker.company.required">
+                                {{ $t('SPEAKERS_EDIT.ERRORS.REQUIRED') }}
+                            </span>
                         </md-field>
-                        <md-field>
+                        <md-field :class="$v.speaker.bio.$invalid ? 'md-invalid' : ''">
                             <label>{{ $t('SPEAKER.BIO') }}</label>
                             <md-textarea :disabled="isSaving"
                                          v-model.trim="speaker.bio">
                             </md-textarea>
+                            <span class="md-error"
+                                  v-if="!$v.speaker.bio.required">
+                                {{ $t('SPEAKERS_EDIT.ERRORS.REQUIRED') }}
+                            </span>
                         </md-field>
                         <div class="md-layout md-gutter">
                             <div class="md-layout-item md-small-size-100">
@@ -115,6 +144,7 @@ export default {
   data() {
     return {
       isSaving: false,
+      isLoadingConferenceHall: false,
       isUpdatingMode: false,
       edition: {},
       speaker: {},
@@ -125,18 +155,10 @@ export default {
   },
   validations: {
     speaker: {
-      displayName: {
-        required,
-      },
-      photoURL: {
-        required,
-      },
-      company: {
-        required,
-      },
-      bio: {
-        required,
-      },
+      displayName: { required },
+      photoURL: { required },
+      company: { required },
+      bio: { required },
     },
   },
   beforeRouteEnter(to, from, next) {
@@ -165,14 +187,14 @@ export default {
   },
   methods: {
     findAllSpeakersFromConferenceHall() {
-      this.isSaving = true;
+      this.isLoadingConferenceHall = true;
 
       SpeakersService.findAllFromConferenceHall(this.$route.params.editionId)
       .then(res => {
         this.speakers = res.speakers;
         this.availableSpeakers = this.speakers.map(speaker => speaker.displayName);
       })
-      .finally(() => this.isSaving = false);
+      .finally(() => this.isLoadingConferenceHall = false);
     },
     initSpeakerFromConferenceHall(speakerName) {
       const speakerFound = this.speakers.find(speaker => speaker.displayName === speakerName);
@@ -188,30 +210,23 @@ export default {
     },
     save() {
       this.isSaving = true;
+      let promise;
 
       if (this.isUpdatingMode) {
-        SpeakersService.update(this.$route.params.speakerId, this.speaker)
-        .then(() => this.$router.push(this.back))
-        .catch(() => {
-          this.$store.commit('notification/setNotification', {
-            active: true,
-            message: this.$t('SPEAKERS_EDIT.ERROR'),
-          });
-        })
-        .finally(() => this.isSaving = false);
+        promise = SpeakersService.update(this.$route.params.speakerId, this.speaker);
       } else {
-        SpeakersService.create(this.speaker)
-        .then(() => this.$router.push(this.back))
-        .catch((err) => {
-          console.log(err);
-          this.$store.commit('notification/setNotification', {
-            active: true,
-            message: this.$t('SPEAKERS_EDIT.ERROR'),
-          });
-        })
-        .finally(() => this.isSaving = false);
+        promise = SpeakersService.create(this.speaker);
       }
 
+      promise
+      .then(() => this.$router.push(this.back))
+      .catch(() => {
+        this.$store.commit('notification/setNotification', {
+          active: true,
+          message: this.$t('SPEAKERS_EDIT.ERRORS.SAVING'),
+        });
+      })
+      .finally(() => this.isSaving = false);
     },
   },
 };
