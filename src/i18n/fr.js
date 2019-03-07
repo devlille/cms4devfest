@@ -128,11 +128,18 @@ export default {
       CREATE: 'Créer un speaker',
       UPDATE: 'Modifier un speaker',
     },
-    ERROR: 'Echec lors de la sauvegarde.',
+    CONFERENCE_HALL: {
+      LOADING: 'Chargement des données depuis ConferenceHall, merci de patienter ...',
+    },
+    ERRORS: {
+      REQUIRED: 'Obligatoire',
+      SAVING: 'Echec lors de la sauvegarde.',
+    },
     INFO: '@:EDITIONS_EDIT.INFO',
   },
   SPEAKER: {
     NAME: 'Prénom & Nom',
+    ROLE: 'Rôle',
     PROFILE_URL: 'URL de l\'image de profil',
     COMPANY: 'Société',
     BIO: 'Biographie',
