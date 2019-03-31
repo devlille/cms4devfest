@@ -59,9 +59,9 @@ export default {
       LABEL: '{0} speaker | {0} speaker | {0} speakers',
       CREATE: 'Créer un speaker',
     },
-    EVENTS: {
-      LABEL: '{0} événement | {0} événement | {0} événements',
-      CREATE: 'Créer un événement',
+    TALKS: {
+      LABEL: '{0} talk | {0} talk | {0} talks',
+      CREATE: 'Créer un talk',
     },
     ERROR: 'Echec lors de la récupération de vos éditions.',
   },
@@ -145,5 +145,19 @@ export default {
     BIO: 'Biographie',
     GITHUB: 'GitHub',
     TWITTER: 'Twitter',
+  },
+  EDITIONS_IMPORT: {
+    LABEL: {
+      IMPORT: 'Importer depuis Conference Hall',
+    },
+    SPEAKERS: {
+      LABEL: 'Aucun speaker | 1 speaker | {0} speakers',
+    },
+    TALKS: {
+      LABEL: 'Aucune conférence | 1 conférence | {0} conférences',
+    },
+    INFO: 'Les speakers et/ou conférences déjà enregistrés dans le système seront mis à jour avec les données provenant de Conference Hall.',
+    ERROR: 'Echec lors de l\'importation, merci de réessayer ultérieurement.',
+    SUCCESS: 'Importation réussie, redirection en cours ...',
   },
 };
