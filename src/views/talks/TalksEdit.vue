@@ -76,6 +76,15 @@
                                 {{ $t('TALKS_EDIT.ERRORS.REQUIRED') }}
                             </span>
                         </md-field>
+                        <md-field :class="$v.talk.hour.$invalid ? 'md-invalid' : ''">
+                            <app-datetime mode="time"
+                                          v-model="talk.hour">
+                            </app-datetime>
+                            <span class="md-error"
+                                  v-if="!$v.talk.hour.required">
+                            {{ $t('TALKS_EDIT.ERRORS.REQUIRED') }}
+                        </span>
+                        </md-field>
                         <md-autocomplete :md-fuzzy-search="false"
                                          :md-input-placeholder="$t('TALKS_EDIT.SPEAKERS')"
                                          :md-open-on-focus="false"
@@ -105,7 +114,8 @@
 </template>
 
 <script>
-import AppBack from '@/components/app-back/AppBack.vue';
+import AppBack from '@/components/app-back/AppBack';
+import AppDatetime from '@/components/app-datetime/AppDatetime';
 import AppTitle from '@/components/app-title/AppTitle';
 import EditionsService from '@/services/EditionsService';
 import SpeakersService from '@/services/SpeakersService';
@@ -114,7 +124,7 @@ import {required} from 'vuelidate/lib/validators';
 
 export default {
   name: 'TalksEdit',
-  components: { AppBack, AppTitle },
+  components: { AppDatetime, AppBack, AppTitle },
   data() {
     return {
       isSaving: false,
@@ -130,6 +140,7 @@ export default {
         abstract: '',
         level: '',
         room: '',
+        hour: new Date(),
         speakers: {},
         edition: '',
       },
@@ -142,6 +153,7 @@ export default {
       level: { required },
       abstract: { required },
       room: { required },
+      hour: { required },
     },
   },
   async beforeRouteEnter(to, from, next) {

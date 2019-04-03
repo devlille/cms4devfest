@@ -178,10 +178,8 @@ export default {
         if (talkIdToUpdate) {
           talksToUpdate[talkIdToUpdate] = Object.assign(talks[talkIdToUpdate], talkToImport);
         } else {
-          talkToImport.room = {
-            id: 'none',
-            name: '',
-          };
+          talkToImport.room = 'none';
+          talkToImport.hour = new Date();
           talkToImport.edition = this.$route.params.editionId;
           talksToCreate.push(talkToImport);
         }

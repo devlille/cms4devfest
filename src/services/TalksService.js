@@ -9,15 +9,13 @@ class TalksService {
       .get()
       .then(query => {
         const talks = {};
-        query.forEach(doc => talks[doc.id] = doc.data());
+        query.forEach(doc => {
+          const talkData = doc.data();
+          talkData.activeOn = new Date(talkData.hour.seconds * 1000);
+          talks[doc.id] = talkData;
+        });
         return talks;
       });
-  }
-
-  findAllFromConferenceHall(editionId) {
-    return firebase.functions()
-      .httpsCallable('findAllTalksFromConferenceHall')({ editionId })
-      .then(res => res.data);
   }
 
   findOne(talkId) {
@@ -30,7 +28,9 @@ class TalksService {
           throw new Error(`Talk ${talkId} doesn't exist !!`);
         }
 
-        return talk.data();
+        const talkData = talk.data();
+        talkData.hour = new Date(talkData.hour.seconds * 1000);
+        return talkData;
       });
   }
 
