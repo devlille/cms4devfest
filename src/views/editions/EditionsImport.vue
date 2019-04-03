@@ -12,7 +12,7 @@
             <div v-if="!isLoading">
                 <app-info>{{ $t('EDITIONS_IMPORT.INFO') }}</app-info>
                 <md-list class="md-elevation-2">
-                    <md-list-item :md-expand="!isSaving">
+                    <md-list-item md-expand>
                         <md-icon>record_voice_over</md-icon>
                         <span class="md-list-item-text">{{ $tc('EDITIONS_IMPORT.SPEAKERS.LABEL', speakers.length, [speakers.length]) }}</span>
 
@@ -29,7 +29,7 @@
                         </md-list>
                     </md-list-item>
 
-                    <md-list-item :md-expand="!isSaving">
+                    <md-list-item md-expand>
                         <md-icon>event</md-icon>
                         <span class="md-list-item-text">{{ $tc('EDITIONS_IMPORT.TALKS.LABEL', talks.length, [talks.length]) }}</span>
 
@@ -165,13 +165,23 @@ export default {
       const speakerIds = Object.keys(speakers);
 
       this.talks.forEach(talkToImport => {
-        talkToImport.speakers = speakerIds.filter(speakerId => talkToImport.speakers.indexOf(speakers[speakerId].uidFromConferenceHall) !== -1);
+        const speakersIds = {};
+
+        speakerIds
+          .filter(speakerId => talkToImport.speakers.indexOf(speakers[speakerId].uidFromConferenceHall) !== -1)
+          .forEach(speakerId => speakersIds[speakerId] = true);
+
+        talkToImport.speakers = speakersIds;
 
         const talkIdToUpdate = talkIds.find(talkId => talks[talkId].displayName === talkToImport.displayName);
 
         if (talkIdToUpdate) {
           talksToUpdate[talkIdToUpdate] = Object.assign(talks[talkIdToUpdate], talkToImport);
         } else {
+          talkToImport.room = {
+            id: 'none',
+            name: '',
+          };
           talkToImport.edition = this.$route.params.editionId;
           talksToCreate.push(talkToImport);
         }

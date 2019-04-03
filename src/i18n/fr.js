@@ -158,6 +158,36 @@ export default {
     },
     INFO: 'Les speakers et/ou conférences déjà enregistrés dans le système seront mis à jour avec les données provenant de Conference Hall.',
     ERROR: 'Echec lors de l\'importation, merci de réessayer ultérieurement.',
-    SUCCESS: 'Importation réussie, redirection en cours ...',
+    SUCCESS: 'Importation réussie.',
+  },
+  TALKS_EDIT: {
+    LABEL: {
+      CREATE: 'Créer une conférence',
+      UPDATE: 'Modifier une conférence',
+    },
+    LEVEL: {
+      BEGINNER: 'Débutant',
+      INTERMEDIATE: 'Intermédiaire',
+      ADVANCED: 'Avancée',
+    },
+    ROOM: {
+      ONE: 'Salle 1',
+      TWO: 'Salle 2',
+      THREE: 'Salle 3',
+      FOUR: 'Salle 4',
+      FIVE: 'Salle 5',
+    },
+    SPEAKERS: 'Rechercher un speaker',
+    ERRORS: {
+      REQUIRED: 'Obligatoire',
+      SAVING: 'Echec lors de la sauvegarde.',
+    },
+  },
+  TALK: {
+    TITLE: 'Titre',
+    ABSTRACT: 'Description',
+    LEVEL: 'Niveau',
+    ROOM: 'Salle',
+    SPEAKERS: 'Speaker(s)',
   },
 };
