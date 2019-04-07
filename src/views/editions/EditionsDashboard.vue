@@ -11,7 +11,6 @@
 
             <md-tabs class="md-elevation-2"
                      md-alignment="fixed"
-                     md-dynamic-height
                      v-if="!isLoading">
                 <md-tab :md-disabled="Object.keys(partners).length === 0"
                         :md-label="$tc('EDITIONS_DASHBOARD.PARTNERS.LABEL', Object.keys(partners).length, [Object.keys(partners).length])"
@@ -95,22 +94,47 @@
 
                 </md-tab>
 
-                <md-tab :md-disabled="Object.keys(events).length === 0"
-                        :md-label="$tc('EDITIONS_DASHBOARD.EVENTS.LABEL', Object.keys(events).length, [Object.keys(events).length])"
-                        id="tab-events"
+                <md-tab :md-disabled="Object.keys(talks).length === 0"
+                        :md-label="$tc('EDITIONS_DASHBOARD.TALKS.LABEL', Object.keys(talks).length, [Object.keys(talks).length])"
+                        id="tab-talks"
                         md-icon="event">
+
+                    <md-list v-if="Object.keys(talks).length > 0">
+                        <md-list-item :key="`talk_${id}`"
+                                      v-for="(talk, id) in talks">
+                            <div class="md-list-item-text">{{ talk.title }}</div>
+
+                            <md-menu>
+                                <md-button class="md-icon-button"
+                                           md-menu-trigger>
+                                    <md-icon>more_vert</md-icon>
+                                </md-button>
+
+                                <md-menu-content>
+                                    <md-menu-item
+                                            :to="{ name: 'talks-edit', params: { editionId: $route.params.editionId, talkId: id } }">
+                                        {{ $t('ACTIONS.MODIFY') }}
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </md-list-item>
+                    </md-list>
 
                 </md-tab>
             </md-tabs>
         </div>
 
-        <md-speed-dial class="md-bottom-right">
+        <md-speed-dial class="cms-edit-btn">
             <md-speed-dial-target>
                 <md-icon>add</md-icon>
             </md-speed-dial-target>
 
             <md-speed-dial-content>
-                <md-button :disabled="true"
+                <md-button @click="add('editions-import')"
+                           class="md-icon-button">
+                    <md-icon>save</md-icon>
+                </md-button>
+                <md-button @click="add('talks-edit')"
                            class="md-icon-button">
                     <md-icon>event</md-icon>
                 </md-button>
@@ -135,6 +159,7 @@ import AppTitle from '@/components/app-title/AppTitle';
 import EditionsService from '@/services/EditionsService';
 import PartnersService from '@/services/PartnersService';
 import SpeakersService from '@/services/SpeakersService';
+import TalksService from '@/services/TalksService';
 
 export default {
   name: 'editions-dashboard',
@@ -145,14 +170,14 @@ export default {
       edition: {},
       partners: {},
       speakers: {},
-      events: {},
+      talks: {},
       back: { name: 'editions' },
     };
   },
   beforeRouteEnter(to, from, next) {
     EditionsService.findOneForCurrentUser(to.params.editionId)
-    .then(edition => next(vm => vm.edition = edition))
-    .catch(() => next({ name: 'editions' }));
+      .then(edition => next(vm => vm.edition = edition))
+      .catch(() => next({ name: 'editions' }));
   },
   created() {
     this.getDatas();
@@ -162,16 +187,18 @@ export default {
       this.isLoading = true;
 
       Promise
-      .all([
-        PartnersService.findAllForEdition(this.$route.params.editionId),
-        SpeakersService.findAllForEdition(this.$route.params.editionId),
-      ])
-      .then(datas => {
-        this.partners = datas[0];
-        this.speakers = datas[1];
-        this.isLoading = false;
-      })
-      .catch(err => console.error(err));
+        .all([
+          PartnersService.findAllForEdition(this.$route.params.editionId),
+          SpeakersService.findAllForEdition(this.$route.params.editionId),
+          TalksService.findAllForEdition(this.$route.params.editionId),
+        ])
+        .then(datas => {
+          this.partners = datas[0];
+          this.speakers = datas[1];
+          this.talks = datas[2];
+          this.isLoading = false;
+        })
+        .catch(err => console.error(err));
     },
     add(name) {
       this.$router.push({ name: name, params: { editionId: this.$route.params.editionId } });

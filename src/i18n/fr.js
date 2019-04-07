@@ -59,9 +59,9 @@ export default {
       LABEL: '{0} speaker | {0} speaker | {0} speakers',
       CREATE: 'Créer un speaker',
     },
-    EVENTS: {
-      LABEL: '{0} événement | {0} événement | {0} événements',
-      CREATE: 'Créer un événement',
+    TALKS: {
+      LABEL: '{0} talk | {0} talk | {0} talks',
+      CREATE: 'Créer un talk',
     },
     ERROR: 'Echec lors de la récupération de vos éditions.',
   },
@@ -145,5 +145,49 @@ export default {
     BIO: 'Biographie',
     GITHUB: 'GitHub',
     TWITTER: 'Twitter',
+  },
+  EDITIONS_IMPORT: {
+    LABEL: {
+      IMPORT: 'Importer depuis Conference Hall',
+    },
+    SPEAKERS: {
+      LABEL: 'Aucun speaker | 1 speaker | {0} speakers',
+    },
+    TALKS: {
+      LABEL: 'Aucune conférence | 1 conférence | {0} conférences',
+    },
+    INFO: 'Les speakers et/ou conférences déjà enregistrés dans le système seront mis à jour avec les données provenant de Conference Hall.',
+    ERROR: 'Echec lors de l\'importation, merci de réessayer ultérieurement.',
+    SUCCESS: 'Importation réussie.',
+  },
+  TALKS_EDIT: {
+    LABEL: {
+      CREATE: 'Créer une conférence',
+      UPDATE: 'Modifier une conférence',
+    },
+    LEVEL: {
+      BEGINNER: 'Débutant',
+      INTERMEDIATE: 'Intermédiaire',
+      ADVANCED: 'Avancée',
+    },
+    ROOM: {
+      ONE: 'Salle 1',
+      TWO: 'Salle 2',
+      THREE: 'Salle 3',
+      FOUR: 'Salle 4',
+      FIVE: 'Salle 5',
+    },
+    SPEAKERS: 'Rechercher un speaker',
+    ERRORS: {
+      REQUIRED: 'Obligatoire',
+      SAVING: 'Echec lors de la sauvegarde.',
+    },
+  },
+  TALK: {
+    TITLE: 'Titre',
+    ABSTRACT: 'Description',
+    LEVEL: 'Niveau',
+    ROOM: 'Salle',
+    SPEAKERS: 'Speaker(s)',
   },
 };

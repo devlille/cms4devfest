@@ -31,6 +31,8 @@ export default {
     }
 
     span:last-child {
+        margin-left: 1rem;
+
         .md-icon {
             color: white;
         }
