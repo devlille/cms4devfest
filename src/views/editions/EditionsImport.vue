@@ -173,7 +173,7 @@ export default {
 
         talkToImport.speakers = speakersIds;
 
-        const talkIdToUpdate = talkIds.find(talkId => talks[talkId].displayName === talkToImport.displayName);
+        const talkIdToUpdate = talkIds.find(talkId => talks[talkId].title === talkToImport.title);
 
         if (talkIdToUpdate) {
           talksToUpdate[talkIdToUpdate] = Object.assign(talks[talkIdToUpdate], talkToImport);
