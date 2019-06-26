@@ -70,6 +70,21 @@
                                 {{ $t('EDITION.CONFERENCE_HALL.API_KEY.EXAMPLE') }}
                             </span>
                         </md-field>
+
+                         <md-subheader>{{ $t('EDITION.BILLET_WEB.LABEL') }}</md-subheader>
+                        <md-field>
+                            <label for="billet_web-event-id">
+                                {{ $t('EDITION.BILLET_WEB.EVENT.LABEL') }}
+                            </label>
+                            <md-input :disabled="isSaving"
+                                      id="billet_web-event-id"
+                                      name="billet_web-event-id"
+                                      v-model.trim="edition.billetWeb.eventId"/>
+                            <span class="md-helper-text"
+                                  v-if="edition.billetWeb.eventId === ''">
+                                {{ $t('EDITION.BILLET_WEB.EVENT.EXAMPLE') }}
+                            </span>
+                        </md-field>
                     </md-card-content>
                     <md-card-actions>
                         <md-button :to="back">{{ $t('ACTIONS.CANCEL') }}</md-button>
@@ -105,6 +120,7 @@ export default {
         url: '',
         date: new Date(),
         conferenceHall: {},
+        billetWeb: {},
       },
       back: { name: 'editions' },
     };

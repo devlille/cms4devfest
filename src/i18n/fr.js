@@ -85,6 +85,13 @@ export default {
         EXAMPLE: 'e.g. d773çfyrh-9dzd5-4dzd5-a5bf-b8dzdzdzddf',
       },
     },
+    BILLET_WEB: {
+      LABEL: 'Billet Web',
+      EVENT: {
+        LABEL: 'ID de l\'évènement',
+        EXAMPLE: 'e.g. 10000',
+      }
+    },
   },
   PARTNERS_EDIT: {
     LABEL: {
