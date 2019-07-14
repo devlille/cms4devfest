@@ -133,14 +133,20 @@
                 <md-button @click="add('editions-import')"
                            class="md-icon-button">
                     <md-icon>save</md-icon>
+                     <md-tooltip md-direction="left">{{ $t('ACTIONS.VALID') }}
+                    </md-tooltip>
                 </md-button>
                 <md-button @click="add('talks-edit')"
                            class="md-icon-button">
                     <md-icon>event</md-icon>
+                    <md-tooltip md-direction="left">{{ $t('EDITIONS_DASHBOARD.TALKS.CREATE') }}
+                    </md-tooltip>
                 </md-button>
                 <md-button @click="add('speakers-edit')"
                            class="md-icon-button">
                     <md-icon>record_voice_over</md-icon>
+                     <md-tooltip md-direction="left">{{ $t('EDITIONS_DASHBOARD.SPEAKERS.CREATE') }}
+                    </md-tooltip>
                 </md-button>
                 <md-button @click="add('partners-edit')"
                            class="md-icon-button">
