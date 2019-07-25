@@ -33,7 +33,7 @@ const firebaseConfig = {
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
   authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -43,18 +43,19 @@ Vue.config.productionTip = false;
 if (process.env.NODE_ENV === 'production') {
   // Google Analytics only on Prod
   document.write(
-  '<script async src="https://www.googletagmanager.com/gtag/js?id=UA-124200391-3"></script>' +
-  '<script>' +
-  '  window.dataLayer = window.dataLayer || [];' +
-  '  function gtag(){dataLayer.push(arguments);}' +
-  '  gtag(\'js\', new Date());' +
-  '  gtag(\'config\', \'UA-124200391-3\');' +
-  '</script>');
+    '<script async src="https://www.googletagmanager.com/gtag/js?id=UA-124200391-3"></script>' +
+      '<script>' +
+      '  window.dataLayer = window.dataLayer || [];' +
+      '  function gtag(){dataLayer.push(arguments);}' +
+      "  gtag('js', new Date());" +
+      "  gtag('config', 'UA-124200391-3');" +
+      '</script>'
+  );
 }
 
 new Vue({
   router,
   store,
   i18n,
-  render: h => h(App),
+  render: h => h(App)
 }).$mount('#app');

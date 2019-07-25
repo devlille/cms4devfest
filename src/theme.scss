@@ -1,21 +1,27 @@
-@import "~vue-material/dist/vue-material.min.css";
-@import "~vue-material/dist/theme/engine";
+@import '~vue-material/dist/vue-material.min.css';
+@import '~vue-material/dist/theme/engine';
 
-@include md-register-theme("default", (
-        primary: md-get-palette-color(teal, 500),
-        accent: md-get-palette-color(amber, 500)
-));
+@include md-register-theme(
+  'default',
+  (
+    primary: md-get-palette-color(teal, 500),
+    accent: md-get-palette-color(amber, 500)
+  )
+);
 
-@include md-register-theme("default-dark", (
-        primary: md-get-palette-color(teal, 500),
-        accent: md-get-palette-color(amber, 500),
-        theme: dark,
-));
+@include md-register-theme(
+  'default-dark',
+  (
+    primary: md-get-palette-color(teal, 500),
+    accent: md-get-palette-color(amber, 500),
+    theme: dark
+  )
+);
 
-@import "~vue-material/dist/theme/all";
+@import '~vue-material/dist/theme/all';
 
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons");
-@import url("https://fonts.googleapis.com/css?family=Boogaloo");
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Boogaloo');
 
 body {
   overflow-x: hidden;

@@ -1,27 +1,29 @@
 import firebase from 'firebase/app';
 
 class SpeakersService {
-
   findAllForEdition(editionId) {
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('speakers')
       .where('edition', '==', editionId)
       .get()
       .then(query => {
         const speakers = {};
-        query.forEach(doc => speakers[doc.id] = doc.data());
+        query.forEach(doc => (speakers[doc.id] = doc.data()));
         return speakers;
       });
   }
 
   findAllFromConferenceHall(editionId) {
-    return firebase.functions()
+    return firebase
+      .functions()
       .httpsCallable('findAllSpeakersFromConferenceHall')({ editionId })
       .then(res => res.data);
   }
 
   findOne(speakerId) {
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('speakers')
       .doc(speakerId)
       .get()
@@ -39,7 +41,8 @@ class SpeakersService {
     speakerToCreate.createdBy = firebase.auth().currentUser.uid;
     speakerToCreate.createdAt = new Date();
 
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('speakers')
       .add(speakerToCreate);
   }
@@ -65,7 +68,8 @@ class SpeakersService {
     speakerToUpdate.modifiedBy = firebase.auth().currentUser.uid;
     speakerToUpdate.modifiedAt = new Date();
 
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('speakers')
       .doc(speakerId)
       .set(speakerToUpdate);
@@ -86,7 +90,6 @@ class SpeakersService {
 
     return batch.commit();
   }
-
 }
 
 export default new SpeakersService();

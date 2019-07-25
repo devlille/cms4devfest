@@ -1,9 +1,9 @@
 import firebase from 'firebase/app';
 
 class TalksService {
-
   findAllForEdition(editionId) {
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('talks')
       .where('edition', '==', editionId)
       .get()
@@ -19,7 +19,8 @@ class TalksService {
   }
 
   findOne(talkId) {
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('talks')
       .doc(talkId)
       .get()
@@ -39,7 +40,8 @@ class TalksService {
     talkToCreate.createdBy = firebase.auth().currentUser.uid;
     talkToCreate.createdAt = new Date();
 
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('talks')
       .add(talkToCreate);
   }
@@ -65,7 +67,8 @@ class TalksService {
     talkToUpdate.modifiedBy = firebase.auth().currentUser.uid;
     talkToUpdate.modifiedAt = new Date();
 
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('talks')
       .doc(talkId)
       .set(talkToUpdate);
@@ -86,7 +89,6 @@ class TalksService {
 
     return batch.commit();
   }
-
 }
 
 export default new TalksService();

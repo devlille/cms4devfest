@@ -1,7 +1,6 @@
 <template>
   <div class="app-dark-mode">
-    <md-button @click="toggleDarkMode"
-               class="md-icon-button">
+    <md-button @click="toggleDarkMode" class="md-icon-button">
       <md-icon v-if="isDarkMode">brightness_2</md-icon>
       <md-icon v-else>wb_sunny</md-icon>
     </md-button>
@@ -13,7 +12,7 @@ export default {
   name: 'AppDarkMode',
   data() {
     return {
-      isDarkMode: false,
+      isDarkMode: false
     };
   },
   watch: {
@@ -23,10 +22,12 @@ export default {
       } else {
         this.$material.theming.theme = 'default';
       }
-    },
+    }
   },
   created() {
-    this.isDarkMode = window.localStorage && window.localStorage.getItem('dark-mode') === 'true';
+    this.isDarkMode =
+      window.localStorage &&
+      window.localStorage.getItem('dark-mode') === 'true';
   },
   methods: {
     toggleDarkMode() {
@@ -35,7 +36,7 @@ export default {
       if (window.localStorage) {
         window.localStorage.setItem('dark-mode', this.isDarkMode);
       }
-    },
-  },
+    }
+  }
 };
 </script>

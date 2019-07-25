@@ -1,4 +1,4 @@
-import {Settings} from 'luxon';
+import { Settings } from 'luxon';
 import moment from 'moment';
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
@@ -12,8 +12,8 @@ moment.locale('fr');
 const i18n = new VueI18n({
   locale: 'fr',
   messages: {
-    fr,
-  },
+    fr
+  }
 });
 
 export default i18n;

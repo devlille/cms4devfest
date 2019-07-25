@@ -1,9 +1,9 @@
 import firebase from 'firebase/app';
 
 class EditionsService {
-
   findAllForCurrentUser() {
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('editions')
       .where(`members.${firebase.auth().currentUser.uid}`, '==', true)
       .get()
@@ -19,7 +19,8 @@ class EditionsService {
   }
 
   findOneForCurrentUser(editionId) {
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('editions')
       .doc(editionId)
       .get()
@@ -41,7 +42,8 @@ class EditionsService {
       context.state = process.env.VUE_APP_CONFERENCE_HALL_STATE;
     }
 
-    return firebase.functions()
+    return firebase
+      .functions()
       .httpsCallable('findOneFromConferenceHall')(context)
       .then(res => res.data);
   }
@@ -52,7 +54,8 @@ class EditionsService {
     edition.members = {};
     edition.members[firebase.auth().currentUser.uid] = true;
 
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('editions')
       .add(edition);
   }
@@ -61,12 +64,12 @@ class EditionsService {
     edition.modifiedBy = firebase.auth().currentUser.uid;
     edition.modifiedAt = new Date();
 
-    return firebase.firestore()
+    return firebase
+      .firestore()
       .collection('editions')
       .doc(editionId)
       .set(edition);
   }
-
 }
 
 export default new EditionsService();

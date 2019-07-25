@@ -13,7 +13,7 @@ const mutations = {
     state.active = notification.active;
     state.message = notification.message;
     state.action = notification.action;
-  },
+  }
 };
 
 export default {
@@ -21,5 +21,5 @@ export default {
   state,
   getters,
   actions,
-  mutations,
-}
+  mutations
+};

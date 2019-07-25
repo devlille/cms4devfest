@@ -1,6 +1,5 @@
 <template>
-  <md-button class="app-back md-icon-button"
-             @click="back">
+  <md-button class="app-back md-icon-button" @click="back">
     <md-icon>arrow_back</md-icon>
   </md-button>
 </template>
@@ -16,13 +15,12 @@ export default {
   },
   methods: {
     back() {
-      if(this.to === null) {
+      if (this.to === null) {
         this.$router.back();
-      }
-      else {
+      } else {
         this.$router.push(this.to);
       }
     }
   }
-}
+};
 </script>
