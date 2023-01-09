@@ -10,7 +10,7 @@
   "engines": {"node": "10"},
   "dependencies": {
     "firebase": "^5.8.3",
-    "luxon": "^1.11.2",
+    "luxon": "^1.28.1",
     "mobile-detect": "^1.4.3",
     "moment": "^2.24.0",
     "register-service-worker": "^1.6.1",
